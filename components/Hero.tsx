@@ -56,7 +56,7 @@ export const Hero = () => {
                                     minWidth: 200.0,
                                     scale: 1.0,
                                     scaleMobile: 1.0,
-                                    color: 0x9d5e06,
+                                    color: 0x101010,
                                     waveSpeed: 1.0,
                                     waveHeight: 15.0,
                                     shininess: 30.0,
