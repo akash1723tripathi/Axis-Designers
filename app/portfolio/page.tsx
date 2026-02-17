@@ -1,10 +1,10 @@
-import { Contact } from "@/components/Contact";
+import { Portfolio } from "@/components/Portfolio";
 import { Footer } from "@/components/Footer";
 
-export default function ContactPage() {
+export default function PortfolioPage() {
       return (
             <main className="relative bg-neutral-950 min-h-screen">
-                  <Contact />
+                  <Portfolio />
                   <Footer />
             </main>
       );

@@ -62,22 +62,24 @@ export const Footer = () => {
                                                 <MapPin className="w-4 h-4" />
                                                 <span className="uppercase tracking-wider text-xs">Address</span>
                                           </div>
-                                          <p className="text-neutral-300">Villa No. 2 - 62nd St</p>
-                                          <p className="text-neutral-300">Al Barsha 3, Dubai, UAE</p>
+                                          <p className="text-neutral-300 max-w-xs leading-relaxed">
+                                                Corporate Space -14, 1st Floor, ANSAL PLAZA, Neelpadam Kunj Complex, Kamma 1, Vaishali, Ghaziabad, Uttar Pradesh 201010
+                                          </p>
                                     </div>
                                     <div className="space-y-1">
                                           <div className="flex items-center gap-2 text-neutral-500 mb-2">
                                                 <Phone className="w-4 h-4" />
                                                 <span className="uppercase tracking-wider text-xs">Phone</span>
                                           </div>
-                                          <p className="text-neutral-300">+971 (0)4 338 7700</p>
+                                          <p className="text-neutral-300">+91 (120) 427 3497</p>
+                                          <p className="text-neutral-300">+91 (981) 860-2480</p>
                                     </div>
                                     <div className="space-y-1">
                                           <div className="flex items-center gap-2 text-neutral-500 mb-2">
                                                 <Mail className="w-4 h-4" />
                                                 <span className="uppercase tracking-wider text-xs">Email</span>
                                           </div>
-                                          <p className="text-neutral-300">info@axisdesigners.ae</p>
+                                          <p className="text-neutral-300">info@axisdesigners.com</p>
                                     </div>
                               </motion.div>
                         </div>

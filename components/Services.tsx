@@ -6,23 +6,23 @@ import { ArrowUpRight } from "lucide-react";
 const services = [
       {
             id: "01",
-            title: "Custom Fabrication",
-            description: "Bespoke booth structures built with precision engineering in our dedicated workshops.",
+            title: "Exhibition Stands",
+            description: "Custom-built exhibition booths and pavilions designed to make your brand the center of attention at trade shows worldwide.",
       },
       {
             id: "02",
-            title: "3D Visualization",
-            description: "Photorealistic renders and walkthroughs to visualize your space before production begins.",
+            title: "Corporate Interiors",
+            description: "Transforming workspaces into inspiring environments that reflect your brand identity and culture.",
       },
       {
             id: "03",
-            title: "Global Logistics",
-            description: "Seamless turnkey execution anywhere in the world, handling shipping, installation and storage.",
+            title: "Retail & Commercial",
+            description: "Immersive retail experiences and commercial spaces that drive engagement and elevate customer journeys.",
       },
       {
             id: "04",
-            title: "Interactive Tech",
-            description: "Integrating AR, VR and touch displays to create immersive brand experiences.",
+            title: "Event Production",
+            description: "End-to-end event design and production — from concept and 3D visualization to on-site execution.",
       },
 ];
 
@@ -31,7 +31,12 @@ export const Services = () => {
             <section id="services" className="py-24 bg-neutral-950 text-white">
                   <div className="max-w-7xl mx-auto px-4">
                         <div className="mb-20">
-                              <h2 className="text-5xl md:text-7xl font-heading uppercase mb-6">Our Expertise</h2>
+                              <div className="flex items-center gap-4 mb-6">
+                                    <a href="/solutions" className="group/arrow flex items-center justify-center w-12 h-12 rounded-full border border-orange-500/50 hover:bg-orange-500 transition-all duration-300 hover:scale-110">
+                                          <ArrowUpRight size={24} className="text-orange-500 group-hover/arrow:text-white transition-colors duration-300" />
+                                    </a>
+                                    <h2 className="text-5xl md:text-7xl font-heading uppercase">Our Expertise</h2>
+                              </div>
                               <div className="w-full h-px bg-neutral-800" />
                         </div>
 
@@ -53,9 +58,6 @@ export const Services = () => {
                                                 <p className="font-sans text-neutral-400 max-w-sm">
                                                       {service.description}
                                                 </p>
-                                                <div className="hidden md:block opacity-0 group-hover:opacity-100 transition-opacity">
-                                                      <ArrowUpRight size={48} className="text-white" />
-                                                </div>
                                           </div>
                                     </motion.div>
                               ))}

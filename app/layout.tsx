@@ -3,6 +3,8 @@ import { Oswald, Inter } from "next/font/google";
 import "./globals.css";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { CustomCursor } from "@/components/CustomCursor";
+import { ClientProviders } from "@/components/ClientProviders";
+import { Navbar } from "@/components/Navbar";
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -31,8 +33,12 @@ export default function RootLayout({
       >
         <SmoothScroll />
         <CustomCursor />
-        {children}
+        <ClientProviders>
+          <Navbar />
+          {children}
+        </ClientProviders>
       </body>
     </html>
   );
 }
+

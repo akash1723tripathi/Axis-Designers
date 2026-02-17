@@ -1,7 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import Image from "next/image";
+import { usePageTransition } from "./PageTransition";
 
 const projects = [
       {
@@ -62,9 +64,19 @@ const cardVariants = {
 };
 
 export const FeaturedProjects = () => {
+      const { navigateWithTransition } = usePageTransition();
+
       // Split projects into two columns for masonry
       const leftColumn = projects.filter((_, i) => i % 2 === 0);
       const rightColumn = projects.filter((_, i) => i % 2 !== 0);
+
+      const handleExploreClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+            const rect = e.currentTarget.getBoundingClientRect();
+            navigateWithTransition("/portfolio", {
+                  x: rect.left + rect.width / 2,
+                  y: rect.top + rect.height / 2,
+            });
+      };
 
       return (
             <section id="projects" className="relative z-20 -mt-[60px] md:-mt-[80px]">
@@ -126,9 +138,9 @@ export const FeaturedProjects = () => {
                               viewport={{ once: true }}
                               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
                         >
-                              <a
-                                    href="#projects"
-                                    className="group relative inline-flex items-center gap-3 px-10 py-5 rounded-full border border-neutral-600 text-white font-sans text-sm uppercase tracking-[0.2em] overflow-hidden transition-colors duration-500 hover:border-orange-500 hover:text-white"
+                              <button
+                                    onClick={handleExploreClick}
+                                    className="group relative inline-flex items-center gap-3 px-10 py-5 rounded-full border border-neutral-600 text-white font-sans text-sm uppercase tracking-[0.2em] overflow-hidden transition-colors duration-500 hover:border-orange-500 hover:text-white cursor-pointer"
                               >
                                     {/* Background fill animation */}
                                     <span className="absolute inset-0 bg-orange-500 rounded-full scale-0 group-hover:scale-100 transition-transform duration-500 ease-out origin-center" />
@@ -148,7 +160,7 @@ export const FeaturedProjects = () => {
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                           </svg>
                                     </span>
-                              </a>
+                              </button>
                         </motion.div>
                   </div>
             </section>
@@ -167,8 +179,12 @@ interface ProjectCardProps {
 }
 
 const ProjectCard = ({ project, index }: ProjectCardProps) => {
+      const cardRef = useRef<HTMLDivElement>(null);
+      const isInView = useInView(cardRef, { margin: "-20% 0px -20% 0px" });
+
       return (
             <motion.div
+                  ref={cardRef}
                   custom={index}
                   variants={cardVariants}
                   initial="hidden"
@@ -189,10 +205,15 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
                               alt={project.title}
                               fill
                               sizes="(max-width: 768px) 100vw, 50vw"
-                              className="object-cover transition-all duration-700 ease-out grayscale group-hover:grayscale-0 group-hover:scale-105"
+                              className={`object-cover transition-all duration-700 ease-out group-hover:scale-105
+                                    ${isInView ? "grayscale-0" : "grayscale"}
+                                    md:grayscale md:group-hover:grayscale-0`}
                         />
-                        {/* Subtle overlay that fades on hover */}
-                        <div className="absolute inset-0 bg-black/20 transition-opacity duration-500 group-hover:opacity-0" />
+                        {/* Dark overlay: fades on hover (desktop) or when in view (mobile) */}
+                        <div className={`absolute inset-0 bg-black/20 transition-opacity duration-700
+                              ${isInView ? "opacity-0" : "opacity-100"}
+                              md:opacity-100 md:group-hover:opacity-0`}
+                        />
                   </motion.div>
 
                   {/* Animated text below card */}

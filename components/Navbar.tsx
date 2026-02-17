@@ -2,31 +2,32 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, MapPin, Mail, Phone, Printer, Instagram, Facebook, Linkedin, Youtube, Twitter } from "lucide-react";
+import { X, MapPin, Mail, Phone, Instagram, Facebook, Linkedin, Youtube, Twitter } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const navLinks = [
       { title: "Home", href: "/" },
-      { title: "Solutions", href: "/#services" },
-      { title: "Projects", href: "/#projects" },
+      { title: "Solutions", href: "/solutions" },
+      { title: "Portfolio", href: "/portfolio" },
       { title: "About", href: "/#about" },
       { title: "Contact", href: "/contact" },
 ];
 
 const contactInfo = {
-      address: "Villa No. 2 - 62nd St - Al Barsha 3",
-      city: "Dubai, United Arab Emirates",
-      poBox: "49800",
-      phone: "+971 (0)4 338 7700",
-      fax: "+971 (0)4 338 7707",
-      email: "info@axisdesigners.ae",
+      addressLine1: "ANSAL PLAZA, CORPORATE SPACE -14, 1ST FLOOR",
+      addressLine2: "Vaishali, Ghaziabad, Uttar Pradesh",
+      mapLink: "https://maps.app.goo.gl/txVsqRGfBvQq58wH9",
+      phone: "+91 (120) 427 3497",
+      phone2: "+91 (981) 860-2480",
+      email: "info@axisdesigners.com",
 };
 
 const socialLinks = [
-      { icon: Twitter, href: "#", label: "Twitter" },
-      { icon: Facebook, href: "#", label: "Facebook" },
-      { icon: Instagram, href: "#", label: "Instagram" },
-      { icon: Linkedin, href: "#", label: "LinkedIn" },
-      { icon: Youtube, href: "#", label: "YouTube" },
+      { icon: Facebook, href: "https://www.facebook.com/AxisDesigners2020/", label: "Facebook" },
+      { icon: Twitter, href: "https://x.com/pvt_axis?mx=2", label: "Twitter" },
+      { icon: Instagram, href: "https://www.instagram.com/_axisdesigners/#", label: "Instagram" },
+      { icon: Linkedin, href: "https://www.linkedin.com/company/axisdesigners/", label: "LinkedIn" },
+      { icon: Youtube, href: "https://www.youtube.com/channel/UCKdiNW_X68SE5C9hF8ui_uw", label: "YouTube" },
 ];
 
 export const Navbar = () => {
@@ -35,11 +36,21 @@ export const Navbar = () => {
       const [activeLink, setActiveLink] = useState(0);
       const buttonRef = useRef<HTMLButtonElement>(null);
       const [origin, setOrigin] = useState({ x: "calc(100% - 3rem)", y: "2rem" });
+      const router = useRouter();
 
       useEffect(() => {
             const timer = setTimeout(() => setLoaded(true), 300);
             return () => clearTimeout(timer);
       }, []);
+
+      // Prefetch all nav routes so pages load instantly
+      useEffect(() => {
+            navLinks.forEach((link) => {
+                  if (!link.href.includes("#")) {
+                        router.prefetch(link.href);
+                  }
+            });
+      }, [router]);
 
       // Lock body scroll when menu is open
       useEffect(() => {
@@ -162,7 +173,7 @@ export const Navbar = () => {
                                           <div className="h-20" />
 
                                           {/* Main content - split layout */}
-                                          <div className="flex-1 flex flex-col md:flex-row items-stretch px-8 md:px-16 pb-8">
+                                          <div className="flex-1 flex flex-col-reverse md:flex-row items-stretch px-8 md:px-16 pb-8">
 
                                                 {/* Left side - Contact info */}
                                                 <motion.div
@@ -173,33 +184,31 @@ export const Navbar = () => {
                                                 >
                                                       {/* Address */}
                                                       <motion.div variants={fadeSlideUp} className="space-y-3">
-                                                            <MapPin className="w-8 h-8 text-orange-500 mb-2" strokeWidth={1.5} />
-                                                            <p className="text-white text-lg font-sans font-medium tracking-wide">
-                                                                  {contactInfo.address}
-                                                            </p>
-                                                            <p className="text-neutral-400 text-sm font-sans">
-                                                                  {contactInfo.city}
-                                                            </p>
+                                                            <a href={contactInfo.mapLink} target="_blank" rel="noopener noreferrer" className="block group">
+                                                                  <MapPin className="w-8 h-8 text-orange-500 mb-3 group-hover:scale-110 transition-transform" strokeWidth={1.5} />
+                                                                  <p className="text-white text-lg font-sans font-bold uppercase tracking-wide group-hover:text-orange-400 transition-colors leading-tight">
+                                                                        {contactInfo.addressLine1}
+                                                                  </p>
+                                                                  <p className="text-neutral-400 text-sm font-sans mt-2">
+                                                                        {contactInfo.addressLine2}
+                                                                  </p>
+                                                            </a>
                                                       </motion.div>
 
                                                       {/* Contact details */}
                                                       <motion.div variants={fadeSlideUp} className="space-y-2 text-sm font-sans">
-                                                            <div className="flex items-center gap-3 text-neutral-300 hover:text-orange-400 transition-colors cursor-pointer group">
-                                                                  <Mail className="w-4 h-4 text-neutral-500 group-hover:text-orange-500 transition-colors" />
-                                                                  <span>{contactInfo.poBox}</span>
-                                                            </div>
-                                                            <div className="flex items-center gap-3 text-neutral-300 hover:text-orange-400 transition-colors cursor-pointer group">
+                                                            <a href={`tel:${contactInfo.phone.replace(/\D/g, '')}`} className="flex items-center gap-3 text-neutral-300 hover:text-orange-400 transition-colors cursor-pointer group">
                                                                   <Phone className="w-4 h-4 text-neutral-500 group-hover:text-orange-500 transition-colors" />
                                                                   <span>{contactInfo.phone}</span>
-                                                            </div>
-                                                            <div className="flex items-center gap-3 text-neutral-300 hover:text-orange-400 transition-colors cursor-pointer group">
-                                                                  <Printer className="w-4 h-4 text-neutral-500 group-hover:text-orange-500 transition-colors" />
-                                                                  <span>{contactInfo.fax}</span>
-                                                            </div>
-                                                            <div className="flex items-center gap-3 text-neutral-300 hover:text-orange-400 transition-colors cursor-pointer group">
+                                                            </a>
+                                                            <a href={`tel:${contactInfo.phone2.replace(/\D/g, '')}`} className="flex items-center gap-3 text-neutral-300 hover:text-orange-400 transition-colors cursor-pointer group">
+                                                                  <Phone className="w-4 h-4 text-neutral-500 group-hover:text-orange-500 transition-colors" />
+                                                                  <span>{contactInfo.phone2}</span>
+                                                            </a>
+                                                            <a href={`mailto:${contactInfo.email}`} className="flex items-center gap-3 text-neutral-300 hover:text-orange-400 transition-colors cursor-pointer group">
                                                                   <Mail className="w-4 h-4 text-neutral-500 group-hover:text-orange-500 transition-colors" />
                                                                   <span>{contactInfo.email}</span>
-                                                            </div>
+                                                            </a>
                                                       </motion.div>
 
                                                       {/* Divider */}
@@ -245,7 +254,11 @@ export const Navbar = () => {
                                                                   <a
                                                                         href={link.href}
                                                                         onMouseEnter={() => setActiveLink(index)}
-                                                                        onClick={() => setIsOpen(false)}
+                                                                        onClick={(e) => {
+                                                                              e.preventDefault();
+                                                                              setIsOpen(false);
+                                                                              router.push(link.href);
+                                                                        }}
                                                                         className={`text-4xl md:text-6xl lg:text-7xl font-heading font-bold uppercase tracking-tight transition-all duration-300 ${activeLink === index
                                                                               ? "text-orange-500 translate-x-0"
                                                                               : "text-neutral-600 hover:text-neutral-300"

@@ -7,8 +7,24 @@ export const CustomCursor = () => {
       const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
       const [isHovered, setIsHovered] = useState(false);
       const [cursorText, setCursorText] = useState("");
+      const [isMobile, setIsMobile] = useState(true);
 
+      // Detect mobile / touch devices
       useEffect(() => {
+            const check = () => {
+                  const hasFinePointer = window.matchMedia("(pointer: fine)").matches;
+                  const isWide = window.innerWidth >= 768;
+                  setIsMobile(!hasFinePointer || !isWide);
+            };
+            check();
+            window.addEventListener("resize", check);
+            return () => window.removeEventListener("resize", check);
+      }, []);
+
+      // Mouse tracking & hover detection
+      useEffect(() => {
+            if (isMobile) return;
+
             const updateMousePosition = (e: MouseEvent) => {
                   setMousePosition({ x: e.clientX, y: e.clientY });
             };
@@ -16,7 +32,6 @@ export const CustomCursor = () => {
             const handleMouseOver = (e: MouseEvent) => {
                   const target = e.target as HTMLElement;
 
-                  // Check for project card hover (data-cursor-text attribute)
                   const cursorTextEl = target.closest("[data-cursor-text]") as HTMLElement | null;
                   if (cursorTextEl) {
                         setCursorText(cursorTextEl.getAttribute("data-cursor-text") || "");
@@ -24,7 +39,6 @@ export const CustomCursor = () => {
                         return;
                   }
 
-                  // Check for link/button hover
                   if (
                         target.tagName === "A" ||
                         target.tagName === "BUTTON" ||
@@ -47,7 +61,9 @@ export const CustomCursor = () => {
                   window.removeEventListener("mousemove", updateMousePosition);
                   window.removeEventListener("mouseover", handleMouseOver);
             };
-      }, []);
+      }, [isMobile]);
+
+      if (isMobile) return null;
 
       const size = cursorText ? 100 : isHovered ? 64 : 16;
       const offset = size / 2;
