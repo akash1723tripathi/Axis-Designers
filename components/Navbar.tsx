@@ -220,6 +220,7 @@ export const Navbar = () => {
                                                       <motion.div variants={fadeSlideUp} className="flex gap-4">
                                                             {socialLinks.map((social, i) => (
                                                                   <a
+                                                                        target="_blank"
                                                                         key={i}
                                                                         href={social.href}
                                                                         aria-label={social.label}
