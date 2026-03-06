@@ -46,12 +46,17 @@ export const PageTransitionProvider = ({ children }: { children: React.ReactNode
                         setPhase("covered");
                         router.push(href);
 
-                        // Just reset state after navigation without retraction animation
+                        // Phase 2: reveal new page
                         setTimeout(() => {
-                              setPhase("idle");
-                              busyRef.current = false;
-                        }, 500);
-                  }, 500);
+                              setPhase("revealing");
+
+                              // After reveal animation, reset
+                              setTimeout(() => {
+                                    setPhase("idle");
+                                    busyRef.current = false;
+                              }, 600);
+                        }, 300);
+                  }, 600);
             },
             [router]
       );
@@ -71,17 +76,16 @@ export const PageTransitionProvider = ({ children }: { children: React.ReactNode
                                     initial={{
                                           clipPath: `circle(0% at ${origin.x} ${origin.y})`,
                                     }}
-                                    animate={{
-                                          clipPath:
-                                                phase === "covered"
-                                                      ? `circle(150% at ${origin.x} ${origin.y})`
-                                                      : `circle(150% at ${origin.x} ${origin.y})`,
-                                    }}
+                                    animate={
+                                          phase === "revealing"
+                                                ? { clipPath: `circle(0% at 50% 50%)` }
+                                                : { clipPath: `circle(150% at ${origin.x} ${origin.y})` }
+                                    }
                                     exit={{
-                                          opacity: 0,
+                                          clipPath: `circle(0% at 50% 50%)`,
                                     }}
                                     transition={{
-                                          duration: 0.5,
+                                          duration: phase === "revealing" ? 0.6 : 0.5,
                                           ease: [0.76, 0, 0.24, 1],
                                     }}
                               />

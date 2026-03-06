@@ -4,7 +4,8 @@ import { useRef, useState } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 
-const marqueeText = "      Discover Axis Designers — Crafting Extraordinary Spaces — ";
+const marqueeText1 = "Discover Axis Designers  ";
+const marqueeText2 = "Crafting Extraordinary Spaces - ";
 
 export const Discovery = () => {
       const sectionRef = useRef<HTMLDivElement>(null);
@@ -37,9 +38,9 @@ export const Discovery = () => {
                                           {[...Array(4)].map((_, i) => (
                                                 <span
                                                       key={i}
-                                                      className="text-[8vw] md:text-[6vw] font-heading uppercase text-white leading-none tracking-tight px-4"
+                                                      className="pl-120 text-[12vw] md:text-[10vw] font-heading uppercase text-white leading-none tracking-tight px-4"
                                                 >
-                                                      {marqueeText}
+                                                      {marqueeText1}
                                                 </span>
                                           ))}
                                     </motion.div>
@@ -53,14 +54,14 @@ export const Discovery = () => {
                                     >
                                           {[...Array(4)].map((_, i) => (
                                                 <span
-                                                      key={i}
-                                                      className="text-[8vw] md:text-[6vw] font-heading uppercase leading-none tracking-tight px-4"
+                                                      key={i + 10}
+                                                      className=" text-[8vw] md:text-[6vw] font-heading uppercase leading-none tracking-tight px-4"
                                                       style={{
                                                             WebkitTextStroke: "1px rgba(255,255,255,0.3)",
                                                             color: "transparent",
                                                       }}
                                                 >
-                                                      {marqueeText}
+                                                      {marqueeText2}
                                                 </span>
                                           ))}
                                     </motion.div>
@@ -72,7 +73,7 @@ export const Discovery = () => {
                               <motion.div
                                     initial={{ opacity: 0, y: 60 }}
                                     whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
+                                    viewport={{ once: false, amount: 0.3 }}
                                     transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] as const }}
                                     data-cursor-text="Play"
                                     onClick={() => setVideoOpen(true)}
@@ -98,7 +99,7 @@ export const Discovery = () => {
                                           <motion.div
                                                 initial={{ scale: 0.8, opacity: 0 }}
                                                 whileInView={{ scale: 1, opacity: 1 }}
-                                                viewport={{ once: true }}
+                                                viewport={{ once: false, amount: 0.3 }}
                                                 transition={{ delay: 0.3, duration: 0.5 }}
                                                 className="w-20 h-20 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center md:hidden"
                                           >

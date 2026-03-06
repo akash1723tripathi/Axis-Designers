@@ -2,42 +2,45 @@
 
 import { motion } from "framer-motion";
 import { ArrowUp, MapPin, Phone, Mail } from "lucide-react";
+import { usePageTransition } from "@/components/PageTransition";
 
 export const Footer = () => {
+      const { navigateWithTransition } = usePageTransition();
+
       const scrollToTop = () => {
             window.scrollTo({ top: 0, behavior: "smooth" });
       };
 
       return (
-            <footer className="relative bg-neutral-950 text-white overflow-hidden">
-                  {/* Large background text */}
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
-                        <h1 className="text-[20vw] font-heading uppercase leading-none text-white/[0.02] tracking-tighter whitespace-nowrap">
-                              Axis Designers
-                        </h1>
+            <footer className="relative bg-neutral-900 text-white overflow-hidden min-h-[90vh] flex flex-col">
+                  {/* Curved top edge */}
+                  <div className="relative w-full bg-neutral-950 shrink-0">
+                        <div className="relative w-full h-[60px] md:h-[80px]">
+                              <div className="absolute bottom-0 left-0 right-0 h-full bg-neutral-900 rounded-t-[40px] md:rounded-t-[60px]" />
+                        </div>
                   </div>
 
-                  {/* Content */}
-                  <div className="relative z-10 max-w-7xl mx-auto px-8 md:px-16 pt-24 pb-8">
+                  {/* Content — grows to fill 90vh */}
+                  <div className="relative z-10 max-w-7xl mx-auto px-8 md:px-16 pt-16 md:pt-24 pb-8 flex-1 flex flex-col justify-between w-full">
                         {/* Top section */}
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-16 pb-16 border-b border-neutral-800">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-16 pb-16 border-b border-white/[0.06]">
                               {/* CTA */}
                               <motion.div
                                     initial={{ opacity: 0, y: 30 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                                    viewport={{ once: true }}
+                                    viewport={{ once: false, amount: 0.3 }}
                                     className="md:col-span-2"
                               >
                                     <p className="text-sm font-sans uppercase tracking-[0.3em] text-orange-500 mb-4">
                                           Let&apos;s Work Together
                                     </p>
-                                    <h2 className="text-4xl md:text-6xl font-heading uppercase leading-tight">
+                                    <h2 className="text-4xl md:text-6xl lg:text-7xl font-heading uppercase leading-tight">
                                           Have a project<br />in mind?
                                     </h2>
-                                    <a
-                                          href="/contact"
-                                          className="group relative inline-flex items-center gap-3 mt-10 px-10 py-5 rounded-full border border-neutral-600 text-white font-sans text-sm uppercase tracking-[0.2em] overflow-hidden transition-colors duration-500 hover:border-orange-500 hover:text-white"
+                                    <button
+                                          onClick={(e) => navigateWithTransition("/contact", { x: e.clientX, y: e.clientY })}
+                                          className="group relative inline-flex items-center gap-3 mt-10 px-10 py-5 rounded-full border border-neutral-600 text-white font-sans text-sm uppercase tracking-[0.2em] overflow-hidden transition-colors duration-500 hover:border-orange-500 hover:text-white cursor-pointer"
                                     >
                                           <span className="absolute inset-0 bg-orange-500 rounded-full scale-0 group-hover:scale-100 transition-transform duration-500 ease-out origin-center" />
                                           <span className="relative z-10 flex items-center gap-3">
@@ -46,7 +49,7 @@ export const Footer = () => {
                                                       <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                                 </svg>
                                           </span>
-                                    </a>
+                                    </button>
                               </motion.div>
 
                               {/* Contact Quick Info */}
@@ -54,7 +57,7 @@ export const Footer = () => {
                                     initial={{ opacity: 0, y: 30 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-                                    viewport={{ once: true }}
+                                    viewport={{ once: false, amount: 0.3 }}
                                     className="space-y-6 text-sm font-sans"
                               >
                                     <div className="space-y-1">

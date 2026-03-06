@@ -19,6 +19,9 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Axis Designers",
   description: "Premium Exhibition Booths & Spatial Design",
+  icons: {
+    icon: "/header_favicon.png",
+  },
 };
 
 export default function RootLayout({

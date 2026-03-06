@@ -89,13 +89,13 @@ export const FeaturedProjects = () => {
                   </div>
 
                   {/* Projects content */}
-                  <div className="bg-neutral-900 pb-32">
+                  <div className="bg-neutral-900 pb-40">
                         {/* Section heading */}
                         <div className="max-w-7xl mx-auto px-8 md:px-16 pt-16 pb-20">
                               <motion.p
                                     initial={{ opacity: 0, y: 20 }}
                                     whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
+                                    viewport={{ once: false, amount: 0.3 }}
                                     transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
                                     className="text-sm font-sans uppercase tracking-[0.3em] text-orange-500 mb-4"
                               >
@@ -104,7 +104,7 @@ export const FeaturedProjects = () => {
                               <motion.h2
                                     initial={{ opacity: 0, y: 30 }}
                                     whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
+                                    viewport={{ once: false, amount: 0.3 }}
                                     transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] as const }}
                                     className="text-4xl md:text-6xl font-heading uppercase text-white"
                               >
@@ -135,7 +135,7 @@ export const FeaturedProjects = () => {
                               className="flex justify-center pt-24 pb-8"
                               initial={{ opacity: 0, y: 30 }}
                               whileInView={{ opacity: 1, y: 0 }}
-                              viewport={{ once: true }}
+                              viewport={{ once: false, amount: 0.3 }}
                               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
                         >
                               <button
@@ -163,6 +163,13 @@ export const FeaturedProjects = () => {
                               </button>
                         </motion.div>
                   </div>
+
+                  {/* Bottom curved edge */}
+                  <div className="relative w-full bg-neutral-950">
+                        <div className="relative w-full h-[60px] md:h-[80px]">
+                              <div className="absolute top-0 left-0 right-0 h-full bg-neutral-900 rounded-b-[40px] md:rounded-b-[60px]" />
+                        </div>
+                  </div>
             </section>
       );
 };
@@ -189,7 +196,7 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
                   variants={cardVariants}
                   initial="hidden"
                   whileInView="visible"
-                  viewport={{ once: true, margin: "-80px" }}
+                  viewport={{ once: false, margin: "-80px" }}
                   data-cursor-text="Explore"
                   className="group cursor-none"
             >
@@ -221,7 +228,7 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
                         className="mt-5 px-1"
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: false, amount: 0.3 }}
                         transition={{ duration: 0.5, delay: 0.15, ease: [0.22, 1, 0.36, 1] as const }}
                   >
                         <h3 className="text-white font-heading text-lg font-bold uppercase tracking-tight transition-colors duration-300 group-hover:text-orange-400">
@@ -231,7 +238,7 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
                               className="text-neutral-400 font-sans text-sm mt-1.5 leading-relaxed"
                               initial={{ opacity: 0, y: 10 }}
                               whileInView={{ opacity: 1, y: 0 }}
-                              viewport={{ once: true }}
+                              viewport={{ once: false, amount: 0.3 }}
                               transition={{ duration: 0.5, delay: 0.25, ease: [0.22, 1, 0.36, 1] as const }}
                         >
                               {project.description}

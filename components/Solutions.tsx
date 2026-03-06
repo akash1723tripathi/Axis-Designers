@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import Image from "next/image";
+import { usePageTransition } from "@/components/PageTransition";
 
 /* ──────────── Data ──────────── */
 
@@ -68,7 +69,7 @@ interface ServiceSectionProps {
 const ServiceSection = ({ service, index, isLast }: ServiceSectionProps) => {
       const sectionRef = useRef<HTMLDivElement>(null);
       const textRef = useRef<HTMLDivElement>(null);
-      const isTextInView = useInView(textRef, { once: true, margin: "-15%" });
+      const isTextInView = useInView(textRef, { once: false, margin: "-15%" });
 
       // Parallax for the image
       const { scrollYProgress } = useScroll({
@@ -82,12 +83,12 @@ const ServiceSection = ({ service, index, isLast }: ServiceSectionProps) => {
       return (
             <section
                   ref={sectionRef}
-                  className={`relative ${!isLast ? "border-b border-white/[0.06]" : ""}`}
+                  className="relative"
             >
                   <div className="max-w-7xl mx-auto px-6 md:px-16">
                         <div
                               className={`flex flex-col ${isEven ? "lg:flex-row" : "lg:flex-row-reverse"
-                                    } gap-12 lg:gap-20 py-24 md:py-32 lg:py-0 lg:min-h-screen items-center`}
+                                    } gap-12 lg:gap-20 py-24 md:py-32 lg:py-[50px] lg:min-h-screen items-center`}
                         >
                               {/* ─── Text side (sticky on desktop) ─── */}
                               <div className="w-full lg:w-[45%] lg:sticky lg:top-0 lg:self-center lg:py-32">
@@ -143,7 +144,7 @@ const ServiceSection = ({ service, index, isLast }: ServiceSectionProps) => {
                                           className="relative aspect-[4/5] md:aspect-[3/4] lg:aspect-[4/5] rounded-2xl overflow-hidden bg-neutral-800"
                                           initial={{ opacity: 0, scale: 0.95 }}
                                           whileInView={{ opacity: 1, scale: 1 }}
-                                          viewport={{ once: true, margin: "-10%" }}
+                                          viewport={{ once: false, margin: "-10%" }}
                                           transition={{
                                                 duration: 0.8,
                                                 ease: [0.22, 1, 0.36, 1] as const,
@@ -175,20 +176,32 @@ const ServiceSection = ({ service, index, isLast }: ServiceSectionProps) => {
 /* ──────────── Main Component ──────────── */
 
 export const Solutions = () => {
+      const { navigateWithTransition } = usePageTransition();
+
       return (
-            <div className="relative bg-[#1a1a1a] overflow-hidden">
-                  {/* Subtle grid texture */}
+            <div className="relative bg-neutral-950 overflow-hidden">
+                  {/* Ambient warm glows — consistent with Team page */}
                   <div
-                        className="fixed inset-0 opacity-[0.03] pointer-events-none z-0"
-                        style={{
-                              backgroundImage:
-                                    "linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)",
-                              backgroundSize: "60px 60px",
-                        }}
+                        className="fixed top-0 left-1/4 w-[700px] h-[700px] rounded-full blur-3xl pointer-events-none z-0"
+                        style={{ background: "radial-gradient(circle, rgba(180,83,9,0.12) 0%, rgba(124,45,18,0.06) 50%, transparent 100%)" }}
+                  />
+                  <div
+                        className="fixed top-1/3 right-1/5 w-[500px] h-[500px] rounded-full blur-3xl pointer-events-none z-0"
+                        style={{ background: "radial-gradient(circle, rgba(234,88,12,0.08) 0%, rgba(120,53,15,0.04) 50%, transparent 100%)" }}
+                  />
+                  <div
+                        className="fixed bottom-1/4 left-1/2 w-[600px] h-[600px] rounded-full blur-3xl pointer-events-none z-0"
+                        style={{ background: "radial-gradient(circle, rgba(217,119,6,0.10) 0%, rgba(124,45,18,0.05) 50%, transparent 100%)" }}
                   />
 
                   {/* ─── Hero header ─── */}
-                  <section className="relative z-10 pt-32 md:pt-44 pb-20 md:pb-28">
+                  <section className="relative z-10 h-screen flex flex-col justify-center overflow-hidden">
+                        {/* Hero-specific glow */}
+                        <div
+                              className="absolute top-1/4 left-1/3 w-[600px] h-[600px] rounded-full blur-3xl pointer-events-none"
+                              style={{ background: "radial-gradient(circle, rgba(180,83,9,0.18) 0%, rgba(124,45,18,0.08) 50%, transparent 100%)" }}
+                        />
+
                         <div className="max-w-7xl mx-auto px-6 md:px-16">
                               <motion.p
                                     initial={{ opacity: 0, y: 20 }}
@@ -229,6 +242,20 @@ export const Solutions = () => {
                                     className="w-24 h-[2px] bg-orange-500 mt-8 origin-left"
                               />
                         </div>
+
+                        {/* Scroll indicator */}
+                        <motion.div
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              transition={{ delay: 1.5, duration: 1 }}
+                              className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
+                        >
+                              <motion.div
+                                    animate={{ y: [0, 8, 0] }}
+                                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                                    className="w-px h-12 bg-gradient-to-b from-transparent via-neutral-600 to-transparent"
+                              />
+                        </motion.div>
                   </section>
 
                   {/* ─── Service sections ─── */}
@@ -242,59 +269,6 @@ export const Solutions = () => {
                               />
                         ))}
                   </div>
-
-                  {/* ─── Bottom CTA ─── */}
-                  <section className="relative z-10 py-24 md:py-32">
-                        <div className="max-w-7xl mx-auto px-6 md:px-16 text-center">
-                              <motion.h2
-                                    initial={{ opacity: 0, y: 30 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{
-                                          duration: 0.7,
-                                          ease: [0.22, 1, 0.36, 1] as const,
-                                    }}
-                                    className="text-3xl md:text-5xl font-heading font-bold uppercase text-white mb-6"
-                              >
-                                    Ready to Build Something{" "}
-                                    <span className="text-orange-500">Extraordinary</span>?
-                              </motion.h2>
-
-                              <motion.p
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{
-                                          duration: 0.6,
-                                          delay: 0.15,
-                                          ease: [0.22, 1, 0.36, 1] as const,
-                                    }}
-                                    className="text-neutral-400 font-sans text-sm md:text-base max-w-xl mx-auto mb-10 leading-relaxed"
-                              >
-                                    Let&apos;s collaborate to create experiences that captivate,
-                                    inspire, and leave a lasting mark on your audience.
-                              </motion.p>
-
-                              <motion.div
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{
-                                          duration: 0.6,
-                                          delay: 0.3,
-                                          ease: [0.22, 1, 0.36, 1] as const,
-                                    }}
-                              >
-                                    <a
-                                          href="/contact"
-                                          className="group relative inline-flex items-center gap-3 px-10 py-5 rounded-full border border-neutral-600 text-white font-sans text-sm uppercase tracking-[0.2em] overflow-hidden transition-all duration-500 hover:border-orange-500"
-                                    >
-                                          <span className="absolute inset-0 bg-orange-500 rounded-full scale-0 group-hover:scale-100 transition-transform duration-500 ease-out origin-center" />
-                                          <span className="relative z-10">Get in Touch</span>
-                                    </a>
-                              </motion.div>
-                        </div>
-                  </section>
 
             </div>
       );

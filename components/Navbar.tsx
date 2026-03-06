@@ -1,15 +1,15 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { X, MapPin, Mail, Phone, Instagram, Facebook, Linkedin, Youtube, Twitter } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 const navLinks = [
       { title: "Home", href: "/" },
       { title: "Solutions", href: "/solutions" },
       { title: "Portfolio", href: "/portfolio" },
-      { title: "About", href: "/#about" },
+      { title: "About", href: "/team" },
       { title: "Contact", href: "/contact" },
 ];
 
@@ -33,10 +33,26 @@ const socialLinks = [
 export const Navbar = () => {
       const [isOpen, setIsOpen] = useState(false);
       const [loaded, setLoaded] = useState(false);
-      const [activeLink, setActiveLink] = useState(0);
+      const [activeLink, setActiveLink] = useState(-1);
       const buttonRef = useRef<HTMLButtonElement>(null);
       const [origin, setOrigin] = useState({ x: "calc(100% - 3rem)", y: "2rem" });
       const router = useRouter();
+      const pathname = usePathname();
+      const isContactPage = pathname === "/contact";
+      const isHomePage = pathname === "/";
+
+      const { scrollY } = useScroll();
+      // Logo starts fading out at 50px of scroll, fully out at 400px (around transition point)
+      const logoOpacity = useTransform(scrollY, [0, 300], [1, 0]);
+      const logoScale = useTransform(scrollY, [0, 300], [1, 0.9]);
+      const logoShiftY = useTransform(scrollY, [0, 300], [0, -10]);
+      const [logoVisible, setLogoVisible] = useState(true);
+
+      useEffect(() => {
+            return scrollY.on("change", (latest) => {
+                  setLogoVisible(latest < 300);
+            });
+      }, [scrollY]);
 
       useEffect(() => {
             const timer = setTimeout(() => setLoaded(true), 300);
@@ -69,6 +85,12 @@ export const Navbar = () => {
                         x: `${rect.left + rect.width / 2}px`,
                         y: `${rect.top + rect.height / 2}px`,
                   });
+                  // Set active link to current route
+                  const currentIndex = navLinks.findIndex((link) => {
+                        if (link.href === "/") return pathname === "/";
+                        return pathname.startsWith(link.href);
+                  });
+                  setActiveLink(currentIndex);
             }
             setIsOpen(!isOpen);
       };
@@ -95,15 +117,44 @@ export const Navbar = () => {
                         initial={{ y: -100, opacity: 0 }}
                         animate={loaded ? { y: 0, opacity: 1 } : {}}
                         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-                        className={`fixed top-0 left-0 w-full z-[60] flex justify-between items-center px-8 py-6 text-white`}
+                        className={`fixed top-0 left-0 w-full z-[60] flex justify-between items-center px-3 md:px-8 py-6 text-white pointer-events-none`}
                   >
                         <motion.div
-                              initial={{ opacity: 0, x: -30 }}
-                              animate={loaded ? { opacity: 1, x: 0 } : {}}
-                              transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                              className="text-2xl font-bold font-heading uppercase tracking-tighter"
+                              style={{
+                                    opacity: logoOpacity,
+                                    scale: logoScale,
+                                    y: logoShiftY,
+                                    pointerEvents: logoVisible ? 'auto' : 'none'
+                              }}
+                              className={`relative pointer-events-auto ${!isHomePage ? "hidden md:block" : ""}`}
                         >
-                              Axis Designers
+                              <motion.div
+                                    initial={{ opacity: 0, x: -30 }}
+                                    animate={loaded ? { opacity: 1, x: 0 } : {}}
+                                    transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                                    className="relative h-20 w-72 cursor-pointer group flex items-center"
+                                    onClick={() => router.push("/")}
+                              >
+                                    <motion.img
+                                          src="/navbar_logo.svg"
+                                          alt="Axis Designers"
+                                          className="h-40 pt-4 w-auto object-contain transition-all duration-500 group-hover:drop-shadow-[0_0_20px_rgba(255,165,0,0.6)] filter brightness-110 contrast-110"
+                                          animate={{
+                                                y: [0, -6, 0],
+                                          }}
+                                          transition={{
+                                                duration: 4,
+                                                repeat: Infinity,
+                                                ease: "easeInOut"
+                                          }}
+                                          whileHover={{
+                                                scale: 1.05,
+                                                rotate: 1,
+                                                transition: { duration: 0.4, ease: "easeOut" }
+                                          }}
+                                          whileTap={{ scale: 0.95 }}
+                                    />
+                              </motion.div>
                         </motion.div>
 
                         <motion.button
@@ -112,7 +163,7 @@ export const Navbar = () => {
                               animate={loaded ? { opacity: 1, x: 0 } : {}}
                               transition={{ duration: 1, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
                               onClick={handleToggle}
-                              className="relative z-[60] flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/5 backdrop-blur-md transition-transform duration-300 hover:scale-110"
+                              className={`relative z-[60] ml-auto flex h-12 w-12 items-center justify-center rounded-full backdrop-blur-md transition-transform duration-300 hover:scale-110 pointer-events-auto ${isContactPage ? "border border-neutral-800/20 bg-neutral-800/5" : "border border-white/20 bg-white/5"}`}
                               aria-label={isOpen ? "Close menu" : "Open menu"}
                         >
                               <AnimatePresence mode="wait">
@@ -135,8 +186,8 @@ export const Navbar = () => {
                                                 transition={{ duration: 0.2 }}
                                                 className="flex flex-col items-end gap-1.5"
                                           >
-                                                <span className="block h-[2px] w-5 bg-white" />
-                                                <span className="block h-[2px] w-3.5 bg-white" />
+                                                <span className={`block h-[2px] w-5 ${isContactPage ? "bg-neutral-900" : "bg-white"}`} />
+                                                <span className={`block h-[2px] w-3.5 ${isContactPage ? "bg-neutral-900" : "bg-white"}`} />
                                           </motion.div>
                                     )}
                               </AnimatePresence>
@@ -170,7 +221,26 @@ export const Navbar = () => {
                                     {/* Content */}
                                     <div className="relative z-10 h-full flex flex-col">
                                           {/* Spacer for top navbar */}
-                                          <div className="h-20" />
+                                          {/* <div className="h-28 flex items-center px-8 md:px-16">
+                                                <motion.img
+                                                      src="/navbar_logo.svg"
+                                                      alt="Axis Designers"
+                                                      className="h-20 w-auto object-contain cursor-pointer transition-all duration-300 filter brightness-110 contrast-110"
+                                                      onClick={() => {
+                                                            setIsOpen(false);
+                                                            router.push("/");
+                                                      }}
+                                                      animate={{
+                                                            y: [0, -6, 0],
+                                                      }}
+                                                      transition={{
+                                                            duration: 4,
+                                                            repeat: Infinity,
+                                                            ease: "easeInOut"
+                                                      }}
+                                                      whileHover={{ scale: 1.05 }}
+                                                />
+                                          </div> */}
 
                                           {/* Main content - split layout */}
                                           <div className="flex-1 flex flex-col-reverse md:flex-row items-stretch px-8 md:px-16 pb-8">
@@ -243,11 +313,11 @@ export const Navbar = () => {
                                                             <motion.div
                                                                   key={index}
                                                                   variants={fadeSlideUp}
-                                                                  className="overflow-hidden group flex items-center gap-4"
+                                                                  className="overflow-hidden group relative flex items-center"
                                                             >
                                                                   {/* Dot indicator for active/hovered link */}
                                                                   <motion.div
-                                                                        className="hidden md:block w-2 h-2 rounded-full bg-orange-500"
+                                                                        className="hidden md:block absolute -left-6 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-orange-500"
                                                                         initial={{ scale: 0 }}
                                                                         animate={{ scale: activeLink === index ? 1 : 0 }}
                                                                         transition={{ duration: 0.2 }}
@@ -260,9 +330,9 @@ export const Navbar = () => {
                                                                               setIsOpen(false);
                                                                               router.push(link.href);
                                                                         }}
-                                                                        className={`text-4xl md:text-6xl lg:text-7xl font-heading font-bold uppercase tracking-tight transition-all duration-300 ${activeLink === index
-                                                                              ? "text-orange-500 translate-x-0"
-                                                                              : "text-neutral-600 hover:text-neutral-300"
+                                                                        className={`text-4xl md:text-6xl lg:text-7xl font-heading uppercase tracking-tight transition-all duration-300 ${activeLink === index
+                                                                              ? "text-orange-500 font-bold"
+                                                                              : "text-neutral-600 hover:text-neutral-300 font-medium"
                                                                               }`}
                                                                   >
                                                                         {link.title}
@@ -277,15 +347,15 @@ export const Navbar = () => {
                                                 initial={{ opacity: 0, y: 20 }}
                                                 animate={{ opacity: 1, y: 0 }}
                                                 transition={{ delay: 0.9, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                                                className="px-8 md:px-16 py-6 border-t border-neutral-800 flex flex-col md:flex-row justify-between items-center gap-4"
+                                                className="px-8 md:px-16 py-6 border-t border-neutral-800 flex flex-col-reverse md:flex-row justify-between items-center gap-4"
                                           >
                                                 <p className="text-neutral-600 text-xs font-sans">
                                                       &copy; 2026 Axis Designers. All rights reserved.
                                                 </p>
                                                 <div className="flex gap-6 text-neutral-500 text-xs font-sans uppercase tracking-wider">
+                                                      <a href="#" className="hover:text-orange-400 transition-colors">Career</a>
                                                       <a href="#" className="hover:text-orange-400 transition-colors">Privacy Policy</a>
                                                       <a href="#" className="hover:text-orange-400 transition-colors">Terms of Service</a>
-                                                      <a href="#" className="hover:text-orange-400 transition-colors">Sitemap</a>
                                                 </div>
                                           </motion.div>
                                     </div>

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import { usePageTransition } from "@/components/PageTransition";
 
 const services = [
       {
@@ -27,14 +28,19 @@ const services = [
 ];
 
 export const Services = () => {
+      const { navigateWithTransition } = usePageTransition();
+
       return (
-            <section id="services" className="py-24 bg-neutral-950 text-white">
-                  <div className="max-w-7xl mx-auto px-4">
+            <section id="services" className="pt-32 md:pt-40 pb-24 bg-neutral-950 text-white">
+                  <div className="max-w-7xl mx-auto px-8 md:px-16">
                         <div className="mb-20">
                               <div className="flex items-center gap-4 mb-6">
-                                    <a href="/solutions" className="group/arrow flex items-center justify-center w-12 h-12 rounded-full border border-orange-500/50 hover:bg-orange-500 transition-all duration-300 hover:scale-110">
+                                    <button
+                                          onClick={(e) => navigateWithTransition("/solutions", { x: e.clientX, y: e.clientY })}
+                                          className="group/arrow flex items-center justify-center w-12 h-12 rounded-full border border-orange-500/50 hover:bg-orange-500 transition-all duration-300 hover:scale-110 cursor-pointer"
+                                    >
                                           <ArrowUpRight size={24} className="text-orange-500 group-hover/arrow:text-white transition-colors duration-300" />
-                                    </a>
+                                    </button>
                                     <h2 className="text-5xl md:text-7xl font-heading uppercase">Our Expertise</h2>
                               </div>
                               <div className="w-full h-px bg-neutral-800" />
@@ -47,7 +53,7 @@ export const Services = () => {
                                           initial={{ opacity: 0, y: 50 }}
                                           whileInView={{ opacity: 1, y: 0 }}
                                           transition={{ duration: 0.5, delay: i * 0.1 }}
-                                          viewport={{ once: true }}
+                                          viewport={{ once: false, amount: 0.3 }}
                                           className="group border-b border-neutral-800 pb-12 cursor-pointer"
                                     >
                                           <div className="flex flex-col md:flex-row md:items-baseline justify-between gap-6">
