@@ -5,7 +5,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { X } from "lucide-react";
 
 const marqueeText1 = "Discover Axis Designers  ";
-const marqueeText2 = "Crafting Extraordinary Spaces - ";
+const marqueeText2 = "Crafting Extraordinary Spaces ";
 
 export const Discovery = () => {
       const sectionRef = useRef<HTMLDivElement>(null);
@@ -38,7 +38,7 @@ export const Discovery = () => {
                                           {[...Array(4)].map((_, i) => (
                                                 <span
                                                       key={i}
-                                                      className="pl-120 text-[12vw] md:text-[10vw] font-heading uppercase text-white leading-none tracking-tight px-4"
+                                                      className="pl-20 md:pl-120 text-[12vw] md:text-[10vw] font-heading uppercase text-white leading-none tracking-tight px-4"
                                                 >
                                                       {marqueeText1}
                                                 </span>
@@ -55,7 +55,7 @@ export const Discovery = () => {
                                           {[...Array(4)].map((_, i) => (
                                                 <span
                                                       key={i + 10}
-                                                      className=" text-[8vw] md:text-[6vw] font-heading uppercase leading-none tracking-tight px-4"
+                                                      className=" text-[8vw] md:text-[5vw] font-heading uppercase leading-none tracking-tight px-4"
                                                       style={{
                                                             WebkitTextStroke: "1px rgba(255,255,255,0.3)",
                                                             color: "transparent",

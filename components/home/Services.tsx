@@ -1,8 +1,8 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import { usePageTransition } from "@/components/PageTransition";
+import { usePageTransition } from "@/components/layout/PageTransition";
 
 const services = [
       {
@@ -23,7 +23,7 @@ const services = [
       {
             id: "04",
             title: "Event Production",
-            description: "End-to-end event design and production — from concept and 3D visualization to on-site execution.",
+            description: "End-to-end event design and production ΓÇö from concept and 3D visualization to on-site execution.",
       },
 ];
 

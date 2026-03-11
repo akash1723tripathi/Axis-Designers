@@ -1,11 +1,5 @@
-import { Hero } from "@/components/Hero";
-import { FeaturedProjects } from "@/components/FeaturedProjects";
-import { Services } from "@/components/Services";
-import { About } from "@/components/About";
-import { Discovery } from "@/components/Discovery";
-import { Clients } from "@/components/Clients";
-import { Footer } from "@/components/Footer";
-import { FooterReveal } from "@/components/FooterReveal";
+import { Hero, FeaturedProjects, Services, About, Discovery, Clients } from "@/components/home";
+import { Footer } from "@/components/shared";
 
 export default function Home() {
   return (

@@ -1,6 +1,5 @@
-import { Solutions } from "@/components/Solutions";
-import { Footer } from "@/components/Footer";
-import { FooterReveal } from "@/components/FooterReveal";
+import { Solutions } from "@/components/solutions";
+import { Footer } from "@/components/shared";
 
 export default function SolutionsPage() {
       return (

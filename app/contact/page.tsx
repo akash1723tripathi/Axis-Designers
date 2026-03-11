@@ -1,6 +1,5 @@
-import { Contact } from "@/components/Contact";
-import { Footer } from "@/components/Footer";
-import { FooterReveal } from "@/components/FooterReveal";
+import { Contact } from "@/components/contact";
+import { Footer } from "@/components/shared";
 
 export default function ContactPage() {
       return (

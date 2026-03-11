@@ -1,6 +1,5 @@
-import { Portfolio } from "@/components/Portfolio";
-import { Footer } from "@/components/Footer";
-import { FooterReveal } from "@/components/FooterReveal";
+import { Portfolio } from "@/components/portfolio";
+import { Footer } from "@/components/shared";
 
 export default function PortfolioPage() {
       return (

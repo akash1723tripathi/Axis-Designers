@@ -1,5 +1,5 @@
-import { Team } from "@/components/Team";
-import { Footer } from "@/components/Footer";
+import { Team } from "@/components/team";
+import { Footer } from "@/components/shared";
 
 export default function TeamPage() {
       return (

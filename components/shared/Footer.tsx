@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowUp, MapPin, Phone, Mail } from "lucide-react";
-import { usePageTransition } from "@/components/PageTransition";
+import { usePageTransition } from "@/components/layout/PageTransition";
 
 export const Footer = () => {
       const { navigateWithTransition } = usePageTransition();

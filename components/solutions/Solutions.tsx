@@ -1,18 +1,18 @@
-"use client";
+﻿"use client";
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import Image from "next/image";
-import { usePageTransition } from "@/components/PageTransition";
+import { usePageTransition } from "@/components/layout/PageTransition";
 
-/* ──────────── Data ──────────── */
+/* ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Data ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ */
 
 const services = [
       {
             id: 1,
             number: "01",
             title: "Exhibitions & Events",
-            highlight: "Top 10 in Germany · Precision & Quality",
+            highlight: "Top 10 in Germany ┬╖ Precision & Quality",
             description:
                   "Axis Designers plays a major role in the German exhibition industry, recognized as one of the top 10 exhibition companies in Germany. Known for excellence and innovation, we consistently set high standards for trade show events with a focus on precision and quality. Our diverse range of exhibitions spans various industries, making us a crucial part of business interactions and industry showcases.",
             image:
@@ -23,9 +23,9 @@ const services = [
             id: 2,
             number: "02",
             title: "Branding & Activation",
-            highlight: "25+ Years Experience · Spaces Inspired by You",
+            highlight: "25+ Years Experience ┬╖ Spaces Inspired by You",
             description:
-                  "Every brand has a unique vision and message, and we bring yours to life by creating a space inspired by you, for you. Your customers shouldn't just be aware of your existence and services — they should understand what you stand for. With over 25 years of experience and undiminished passion, we craft brand activations that leave lasting impressions.",
+                  "Every brand has a unique vision and message, and we bring yours to life by creating a space inspired by you, for you. Your customers shouldn't just be aware of your existence and services ΓÇö they should understand what you stand for. With over 25 years of experience and undiminished passion, we craft brand activations that leave lasting impressions.",
             image:
                   "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=1200",
 
@@ -36,14 +36,14 @@ const services = [
             title: "Architecture & Interiors",
             highlight: "Creating Spaces That Reflect Your Essence",
             description:
-                  "We believe in creating spaces that reflect your essence, where living and working feel like bliss. Architecture and interior design are not just the bones of any physical place — they are the heart of Axis Designers. Our talented team of architects and designers is passionate about crafting spaces that resonate with your personal style, ensuring each environment feels uniquely yours.",
+                  "We believe in creating spaces that reflect your essence, where living and working feel like bliss. Architecture and interior design are not just the bones of any physical place ΓÇö they are the heart of Axis Designers. Our talented team of architects and designers is passionate about crafting spaces that resonate with your personal style, ensuring each environment feels uniquely yours.",
             image:
                   "https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=1200",
 
       },
 ];
 
-/* ──────────── Animations ──────────── */
+/* ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Animations ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ */
 
 const fadeUp = {
       hidden: { opacity: 0, y: 30 },
@@ -58,7 +58,7 @@ const fadeUp = {
       }),
 };
 
-/* ──────────── Service Section ──────────── */
+/* ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Service Section ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ */
 
 interface ServiceSectionProps {
       service: (typeof services)[0];
@@ -90,7 +90,7 @@ const ServiceSection = ({ service, index, isLast }: ServiceSectionProps) => {
                               className={`flex flex-col ${isEven ? "lg:flex-row" : "lg:flex-row-reverse"
                                     } gap-12 lg:gap-20 py-24 md:py-32 lg:py-[50px] lg:min-h-screen items-center`}
                         >
-                              {/* ─── Text side (sticky on desktop) ─── */}
+                              {/* ΓöÇΓöÇΓöÇ Text side (sticky on desktop) ΓöÇΓöÇΓöÇ */}
                               <div className="w-full lg:w-[45%] lg:sticky lg:top-0 lg:self-center lg:py-32">
                                     <div ref={textRef}>
                                           <motion.div
@@ -138,7 +138,7 @@ const ServiceSection = ({ service, index, isLast }: ServiceSectionProps) => {
                                     </div>
                               </div>
 
-                              {/* ─── Image side (parallax) ─── */}
+                              {/* ΓöÇΓöÇΓöÇ Image side (parallax) ΓöÇΓöÇΓöÇ */}
                               <div className="w-full lg:w-[55%]">
                                     <motion.div
                                           className="relative aspect-[4/5] md:aspect-[3/4] lg:aspect-[4/5] rounded-2xl overflow-hidden bg-neutral-800"
@@ -173,14 +173,14 @@ const ServiceSection = ({ service, index, isLast }: ServiceSectionProps) => {
       );
 };
 
-/* ──────────── Main Component ──────────── */
+/* ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Main Component ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ */
 
 export const Solutions = () => {
       const { navigateWithTransition } = usePageTransition();
 
       return (
             <div className="relative bg-neutral-950 overflow-hidden">
-                  {/* Ambient warm glows — consistent with Team page */}
+                  {/* Ambient warm glows ΓÇö consistent with Team page */}
                   <div
                         className="fixed top-0 left-1/4 w-[700px] h-[700px] rounded-full blur-3xl pointer-events-none z-0"
                         style={{ background: "radial-gradient(circle, rgba(180,83,9,0.12) 0%, rgba(124,45,18,0.06) 50%, transparent 100%)" }}
@@ -194,7 +194,7 @@ export const Solutions = () => {
                         style={{ background: "radial-gradient(circle, rgba(217,119,6,0.10) 0%, rgba(124,45,18,0.05) 50%, transparent 100%)" }}
                   />
 
-                  {/* ─── Hero header ─── */}
+                  {/* ΓöÇΓöÇΓöÇ Hero header ΓöÇΓöÇΓöÇ */}
                   <section className="relative z-10 h-screen flex flex-col justify-center overflow-hidden">
                         {/* Hero-specific glow */}
                         <div
@@ -258,7 +258,7 @@ export const Solutions = () => {
                         </motion.div>
                   </section>
 
-                  {/* ─── Service sections ─── */}
+                  {/* ΓöÇΓöÇΓöÇ Service sections ΓöÇΓöÇΓöÇ */}
                   <div className="relative z-10">
                         {services.map((service, idx) => (
                               <ServiceSection

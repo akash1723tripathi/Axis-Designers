@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useRef } from "react";
 import { motion, useInView, Variants } from "framer-motion";
@@ -17,9 +17,9 @@ import {
       Rocket,
       type LucideIcon,
 } from "lucide-react";
-import { usePageTransition } from "@/components/PageTransition";
+import { usePageTransition } from "@/components/layout/PageTransition";
 
-/* ──────────── Industry Data ──────────── */
+/* ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Industry Data ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ */
 
 const industries: { title: string; icon: LucideIcon }[] = [
       { title: "Pharmaceutical & Healthcare", icon: Pill },
@@ -36,7 +36,7 @@ const industries: { title: string; icon: LucideIcon }[] = [
       { title: "Startups & Innovation", icon: Rocket },
 ];
 
-/* ──────────── Animation Variants ──────────── */
+/* ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Animation Variants ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ */
 
 const stagger: Variants = {
       hidden: {},
@@ -55,7 +55,7 @@ const cardVariant: Variants = {
       },
 };
 
-/* ──────────── Industry Card ──────────── */
+/* ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Industry Card ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ */
 
 interface IndustryCardProps {
       title: string;
@@ -95,7 +95,7 @@ const IndustryCard = ({ title, Icon }: IndustryCardProps) => {
       );
 };
 
-/* ──────────── Main Component ──────────── */
+/* ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Main Component ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ */
 
 export const Portfolio = () => {
       const { navigateWithTransition } = usePageTransition();
@@ -104,7 +104,7 @@ export const Portfolio = () => {
 
       return (
             <div className="relative bg-neutral-950 overflow-hidden">
-                  {/* Ambient warm glows — consistent with Solutions & Team pages */}
+                  {/* Ambient warm glows ΓÇö consistent with Solutions & Team pages */}
                   <div
                         className="fixed top-0 left-1/4 w-[700px] h-[700px] rounded-full blur-3xl pointer-events-none z-0"
                         style={{ background: "radial-gradient(circle, rgba(180,83,9,0.12) 0%, rgba(124,45,18,0.06) 50%, transparent 100%)" }}
@@ -118,7 +118,7 @@ export const Portfolio = () => {
                         style={{ background: "radial-gradient(circle, rgba(217,119,6,0.10) 0%, rgba(124,45,18,0.05) 50%, transparent 100%)" }}
                   />
 
-                  {/* ─── Hero header ─── */}
+                  {/* ΓöÇΓöÇΓöÇ Hero header ΓöÇΓöÇΓöÇ */}
                   <section className="relative z-10 h-screen flex flex-col justify-center overflow-hidden">
                         {/* Hero-specific glow */}
                         <div
@@ -165,7 +165,7 @@ export const Portfolio = () => {
                                     }}
                                     className="text-neutral-400 font-sans text-sm md:text-base max-w-lg mt-6 leading-relaxed"
                               >
-                                    We&apos;ve delivered award-winning exhibition spaces across diverse industries — each one crafted to tell a unique brand story.
+                                    We&apos;ve delivered award-winning exhibition spaces across diverse industries ΓÇö each one crafted to tell a unique brand story.
                               </motion.p>
 
                               <motion.div
@@ -195,7 +195,7 @@ export const Portfolio = () => {
                         </motion.div>
                   </section>
 
-                  {/* ─── Industries We Serve ─── */}
+                  {/* ΓöÇΓöÇΓöÇ Industries We Serve ΓöÇΓöÇΓöÇ */}
                   <section className="relative z-10 py-24 md:py-32">
                         <div className="max-w-7xl mx-auto px-6 md:px-16">
                               {/* Section header */}
@@ -249,7 +249,7 @@ export const Portfolio = () => {
                         </div>
                   </section>
 
-                  {/* ─── Bottom CTA ─── */}
+                  {/* ΓöÇΓöÇΓöÇ Bottom CTA ΓöÇΓöÇΓöÇ */}
                   {/* <section className="relative z-10 py-24 md:py-40">
                         <div className="max-w-7xl mx-auto px-6 md:px-16 text-center">
                               <motion.h2

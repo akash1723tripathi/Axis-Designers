@@ -34,6 +34,7 @@ export const Navbar = () => {
       const [isOpen, setIsOpen] = useState(false);
       const [loaded, setLoaded] = useState(false);
       const [activeLink, setActiveLink] = useState(-1);
+      const [logoHidden, setLogoHidden] = useState(false);
       const buttonRef = useRef<HTMLButtonElement>(null);
       const [origin, setOrigin] = useState({ x: "calc(100% - 3rem)", y: "2rem" });
       const router = useRouter();
@@ -58,6 +59,11 @@ export const Navbar = () => {
             const timer = setTimeout(() => setLoaded(true), 300);
             return () => clearTimeout(timer);
       }, []);
+
+      // Reset logoHidden when route changes (new page loaded)
+      useEffect(() => {
+            setLogoHidden(false);
+      }, [pathname]);
 
       // Prefetch all nav routes so pages load instantly
       useEffect(() => {
@@ -121,24 +127,26 @@ export const Navbar = () => {
                   >
                         <motion.div
                               style={{
-                                    opacity: logoOpacity,
                                     scale: logoScale,
                                     y: logoShiftY,
-                                    pointerEvents: logoVisible ? 'auto' : 'none'
+                                    pointerEvents: logoVisible && !isOpen ? 'auto' : 'none'
                               }}
-                              className={`relative pointer-events-auto ${!isHomePage ? "hidden md:block" : ""}`}
+                              animate={{ opacity: isOpen || logoHidden ? 0 : logoVisible ? 1 : 0 }}
+                              transition={{ duration: 0.3 }}
+                              className="relative pointer-events-auto"
                         >
                               <motion.div
-                                    initial={{ opacity: 0, x: -30 }}
-                                    animate={loaded ? { opacity: 1, x: 0 } : {}}
+                                    key={pathname}
+                                    initial={{ opacity: 0, x: -30, scale: 0.9 }}
+                                    animate={{ opacity: 1, x: 0, scale: 1 }}
                                     transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
                                     className="relative h-20 w-72 cursor-pointer group flex items-center"
                                     onClick={() => router.push("/")}
                               >
                                     <motion.img
-                                          src="/navbar_logo.svg"
+                                          src={isContactPage ? "/logos/axis_b&w.png" : "/logos/axis_logo_color.png"}
                                           alt="Axis Designers"
-                                          className="h-40 pt-4 w-auto object-contain transition-all duration-500 group-hover:drop-shadow-[0_0_20px_rgba(255,165,0,0.6)] filter brightness-110 contrast-110"
+                                          className="h-40 pt-4 w-auto object-contain transition-all duration-500 group-hover:drop-shadow-[0_0_20px_rgba(255,165,0,0.6)]"
                                           animate={{
                                                 y: [0, -6, 0],
                                           }}
@@ -327,6 +335,7 @@ export const Navbar = () => {
                                                                         onMouseEnter={() => setActiveLink(index)}
                                                                         onClick={(e) => {
                                                                               e.preventDefault();
+                                                                              setLogoHidden(true);
                                                                               setIsOpen(false);
                                                                               router.push(link.href);
                                                                         }}

@@ -1,9 +1,9 @@
-"use client";
+﻿"use client";
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
-import { usePageTransition } from "./PageTransition";
+import { usePageTransition } from "@/components/layout/PageTransition";
 
 const projects = [
       {

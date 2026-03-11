@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
 import { Oswald, Inter } from "next/font/google";
 import "./globals.css";
-import { SmoothScroll } from "@/components/SmoothScroll";
-import { CustomCursor } from "@/components/CustomCursor";
-import { ClientProviders } from "@/components/ClientProviders";
-import { Navbar } from "@/components/Navbar";
+import { SmoothScroll, CustomCursor, ClientProviders, Navbar } from "@/components/layout";
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -44,4 +41,3 @@ export default function RootLayout({
     </html>
   );
 }
-
