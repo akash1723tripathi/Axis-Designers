@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowUp, MapPin, Phone, Mail } from "lucide-react";
+import { ArrowUp, MapPin, Phone, Mail, MessageCircle } from "lucide-react";
 import { usePageTransition } from "@/components/layout/PageTransition";
 
 export const Footer = () => {
@@ -65,24 +65,36 @@ export const Footer = () => {
                                                 <MapPin className="w-4 h-4" />
                                                 <span className="uppercase tracking-wider text-xs">Address</span>
                                           </div>
-                                          <p className="text-neutral-300 max-w-xs leading-relaxed">
+                                          <a href="https://www.google.com/maps/search/?api=1&query=Corporate+Space+14+1st+Floor+ANSAL+PLAZA+Neelpadam+Kunj+Complex+Kamma+1+Vaishali+Ghaziabad+Uttar+Pradesh+201010" target="_blank" rel="noopener noreferrer" className="text-neutral-300 max-w-xs leading-relaxed block hover:text-orange-500 transition-colors duration-300">
                                                 Corporate Space -14, 1st Floor, ANSAL PLAZA, Neelpadam Kunj Complex, Kamma 1, Vaishali, Ghaziabad, Uttar Pradesh 201010
-                                          </p>
+                                          </a>
                                     </div>
                                     <div className="space-y-1">
                                           <div className="flex items-center gap-2 text-neutral-500 mb-2">
                                                 <Phone className="w-4 h-4" />
                                                 <span className="uppercase tracking-wider text-xs">Phone</span>
                                           </div>
-                                          <p className="text-neutral-300">+91 (120) 427 3497</p>
-                                          <p className="text-neutral-300">+91 (981) 860-2480</p>
+                                          <a href="tel:+919811200735" className="text-neutral-300 hover:text-orange-500 transition-colors duration-300">
+                                                +91 (981) 120-0735
+                                          </a>
+                                    </div>
+                                    <div className="space-y-1">
+                                          <div className="flex items-center gap-2 text-neutral-500 mb-2">
+                                                <MessageCircle className="w-4 h-4" />
+                                                <span className="uppercase tracking-wider text-xs">WhatsApp</span>
+                                          </div>
+                                          <a href="https://wa.me/919811200735" target="_blank" rel="noopener noreferrer" className="text-neutral-300 hover:text-orange-500 transition-colors duration-300">
+                                                +91 (981) 120-0735
+                                          </a>
                                     </div>
                                     <div className="space-y-1">
                                           <div className="flex items-center gap-2 text-neutral-500 mb-2">
                                                 <Mail className="w-4 h-4" />
                                                 <span className="uppercase tracking-wider text-xs">Email</span>
                                           </div>
-                                          <p className="text-neutral-300">info@axisdesigners.com</p>
+                                          <a href="https://mail.google.com/mail/?view=cm&to=info@axisdesigners.com&su=Project%20Inquiry" target="_blank" rel="noopener noreferrer" className="text-neutral-300 hover:text-orange-500 transition-colors duration-300">
+                                                info@axisdesigners.com
+                                          </a>
                                     </div>
                               </motion.div>
                         </div>

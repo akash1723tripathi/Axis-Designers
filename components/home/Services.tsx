@@ -22,8 +22,8 @@ const services = [
       },
       {
             id: "04",
-            title: "Event Production",
-            description: "End-to-end event design and production ΓÇö from concept and 3D visualization to on-site execution.",
+            title: "Event End-to-End",
+            description: "End-to-end event design and production from concept and 3D visualization to on-site execution.",
       },
 ];
 
