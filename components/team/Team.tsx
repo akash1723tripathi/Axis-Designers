@@ -1,9 +1,57 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { useState, useRef, useCallback } from "react";
+import { motion, AnimatePresence, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
 import { Plus, Minus } from "lucide-react";
 import Image from "next/image";
+
+/* ─── Magnetic / sticky button ─── */
+function MagneticButton({
+      children,
+      onClick,
+      className = "",
+}: {
+      children: React.ReactNode;
+      onClick: () => void;
+      className?: string;
+}) {
+      const ref = useRef<HTMLButtonElement>(null);
+      const x = useMotionValue(0);
+      const y = useMotionValue(0);
+      const springX = useSpring(x, { stiffness: 250, damping: 20 });
+      const springY = useSpring(y, { stiffness: 250, damping: 20 });
+
+      const handleMouseMove = useCallback(
+            (e: React.MouseEvent) => {
+                  if (!ref.current) return;
+                  const rect = ref.current.getBoundingClientRect();
+                  const cx = rect.left + rect.width / 2;
+                  const cy = rect.top + rect.height / 2;
+                  x.set((e.clientX - cx) * 0.35);
+                  y.set((e.clientY - cy) * 0.35);
+            },
+            [x, y]
+      );
+
+      const handleMouseLeave = useCallback(() => {
+            x.set(0);
+            y.set(0);
+      }, [x, y]);
+
+      return (
+            <motion.button
+                  ref={ref}
+                  style={{ x: springX, y: springY }}
+                  onMouseMove={handleMouseMove}
+                  onMouseLeave={handleMouseLeave}
+                  onClick={onClick}
+                  className={className}
+                  data-cursor-hover
+            >
+                  {children}
+            </motion.button>
+      );
+}
 
 interface TeamMember {
       id: number;
@@ -130,38 +178,37 @@ function TeamMemberCard({ member, index }: { member: TeamMember; index: number }
                                           {member.name}
                                     </motion.h2>
 
-                                    {/* Expand/Collapse toggle */}
-                                    <motion.button
-                                          variants={fadeUp}
-                                          custom={3}
-                                          onClick={() => setExpanded(!expanded)}
-                                          className="mt-6 md:mt-8 w-14 h-14 md:w-16 md:h-16 rounded-full border border-neutral-700 flex items-center justify-center hover:border-orange-500 transition-colors duration-300 group"
-                                          data-cursor-hover
-                                    >
-                                          <AnimatePresence mode="wait">
-                                                {expanded ? (
-                                                      <motion.div
-                                                            key="minus"
-                                                            initial={{ rotate: -90, opacity: 0 }}
-                                                            animate={{ rotate: 0, opacity: 1 }}
-                                                            exit={{ rotate: 90, opacity: 0 }}
-                                                            transition={{ duration: 0.2 }}
-                                                      >
-                                                            <Minus className="w-5 h-5 text-neutral-400 group-hover:text-orange-500 transition-colors" />
-                                                      </motion.div>
-                                                ) : (
-                                                      <motion.div
-                                                            key="plus"
-                                                            initial={{ rotate: -90, opacity: 0 }}
-                                                            animate={{ rotate: 0, opacity: 1 }}
-                                                            exit={{ rotate: 90, opacity: 0 }}
-                                                            transition={{ duration: 0.2 }}
-                                                      >
-                                                            <Plus className="w-5 h-5 text-neutral-400 group-hover:text-orange-500 transition-colors" />
-                                                      </motion.div>
-                                                )}
-                                          </AnimatePresence>
-                                    </motion.button>
+                                    {/* Expand/Collapse toggle — magnetic sticky effect */}
+                                    <motion.div variants={fadeUp} custom={3}>
+                                          <MagneticButton
+                                                onClick={() => setExpanded(!expanded)}
+                                                className="mt-6 md:mt-8 w-14 h-14 md:w-16 md:h-16 rounded-full border border-neutral-700 flex items-center justify-center hover:border-orange-500 transition-colors duration-300 group"
+                                          >
+                                                <AnimatePresence mode="wait">
+                                                      {expanded ? (
+                                                            <motion.div
+                                                                  key="minus"
+                                                                  initial={{ rotate: -90, opacity: 0 }}
+                                                                  animate={{ rotate: 0, opacity: 1 }}
+                                                                  exit={{ rotate: 90, opacity: 0 }}
+                                                                  transition={{ duration: 0.2 }}
+                                                            >
+                                                                  <Minus className="w-5 h-5 text-neutral-400 group-hover:text-orange-500 transition-colors" />
+                                                            </motion.div>
+                                                      ) : (
+                                                            <motion.div
+                                                                  key="plus"
+                                                                  initial={{ rotate: -90, opacity: 0 }}
+                                                                  animate={{ rotate: 0, opacity: 1 }}
+                                                                  exit={{ rotate: 90, opacity: 0 }}
+                                                                  transition={{ duration: 0.2 }}
+                                                            >
+                                                                  <Plus className="w-5 h-5 text-neutral-400 group-hover:text-orange-500 transition-colors" />
+                                                            </motion.div>
+                                                      )}
+                                                </AnimatePresence>
+                                          </MagneticButton>
+                                    </motion.div>
 
                                     {/* Bio (expandable) */}
                                     <AnimatePresence>
@@ -212,65 +259,34 @@ function TeamMemberCard({ member, index }: { member: TeamMember; index: number }
 }
 
 export const Team = () => {
-      const heroRef = useRef<HTMLDivElement>(null);
-      const { scrollYProgress: heroScroll } = useScroll({
-            target: heroRef,
-            offset: ["start start", "end start"],
-      });
-      const heroTextY = useTransform(heroScroll, [0, 1], ["0%", "30%"]);
-      const heroOpacity = useTransform(heroScroll, [0, 0.8], [1, 0]);
-
       return (
             <section className="relative bg-neutral-950 min-h-screen overflow-hidden">
-                  {/* Hero Section */}
-                  <div ref={heroRef} className="relative h-screen flex flex-col justify-center items-center overflow-hidden">
-                        {/* Ambient warm glow */}
-                        <div
-                              className="absolute top-1/4 left-1/3 w-[600px] h-[600px] rounded-full blur-3xl"
-                              style={{ background: "radial-gradient(circle, rgba(180,83,9,0.15) 0%, rgba(124,45,18,0.08) 50%, transparent 100%)" }}
-                        />
-                        <div
-                              className="absolute top-1/3 right-1/4 w-[400px] h-[400px] rounded-full blur-3xl"
-                              style={{ background: "radial-gradient(circle, rgba(234,88,12,0.10) 0%, rgba(120,53,15,0.05) 50%, transparent 100%)" }}
-                        />
-
-                        {/* Main headline */}
-                        <motion.div
-                              style={{ y: heroTextY, opacity: heroOpacity }}
-                              className="relative z-10 px-6 md:px-16 max-w-5xl"
-                        >
-                              <motion.h1
-                                    initial={{ opacity: 0, y: 50 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                                    className="text-4xl sm:text-5xl md:text-6xl lg:text-[5.5rem] font-heading uppercase leading-[1.05] text-white text-center"
-                              >
-                                    From Vision to{" "}
-                                    <span className="italic font-light">Reality,</span>
-                                    <br />
-                                    <span className="text-neutral-400">We craft spaces</span>
-                                    <br />
-                                    that inspire
-                              </motion.h1>
-                        </motion.div>
-
-                        {/* Scroll indicator */}
-                        <motion.div
-                              initial={{ opacity: 0 }}
-                              animate={{ opacity: 1 }}
-                              transition={{ delay: 1.5, duration: 1 }}
-                              className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
-                        >
-                              <motion.div
-                                    animate={{ y: [0, 8, 0] }}
-                                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                                    className="w-px h-12 bg-gradient-to-b from-transparent via-neutral-600 to-transparent"
-                              />
-                        </motion.div>
-                  </div>
+                  {/* Ambient gradient glow — violet/pink from right */}
+                  <div
+                        className="absolute top-1/4 right-0 w-[500px] h-[500px] rounded-full blur-3xl pointer-events-none"
+                        style={{
+                              background: `
+                              radial-gradient(at 60% 40%, rgba(167,139,250,0.10) 0px, transparent 50%),
+                              radial-gradient(at 40% 70%, rgba(244,114,182,0.08) 0px, transparent 50%)
+                              `,
+                        }}
+                  />
+                  {/* Section heading */}
+                  <motion.div
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                        className="text-center pt-24 md:pt-32"
+                  >
+                        <h2 className="font-heading text-5xl md:text-7xl lg:text-8xl leading-[1.1]">
+                              <span className="italic font-light text-neutral-500">Our</span>
+                              <span className="px-5 text-white font-bold">Team</span>
+                        </h2>
+                  </motion.div>
 
                   {/* Team Members */}
-                  <div className="relative px-6 md:px-16 max-w-7xl mx-auto pb-24">
+                  <div className="relative px-6 md:px-16 max-w-7xl mx-auto py-24">
                         {teamMembers.map((member, index) => (
                               <TeamMemberCard key={member.id} member={member} index={index} />
                         ))}

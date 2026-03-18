@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch(domain:monopo.vn)"
+      "WebFetch(domain:monopo.vn)",
+      "WebFetch(domain:cuberto.com)",
+      "Bash(git checkout:*)"
     ]
   }
 }

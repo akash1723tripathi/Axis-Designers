@@ -1,1 +1,9 @@
+export { AboutHero } from "./AboutHero";
+export { JourneySoFar } from "./JourneySoFar";
+export { Milestones } from "./Milestones";
+export { WhatWeDo } from "./WhatWeDo";
+export { HowWeWork } from "./HowWeWork";
+export { WhyAxisDesigners } from "./WhyAxisDesigners";
 export { Team } from "./Team";
+export { TeamCulture } from "./TeamCulture";
+export { Reach } from "./Reach";

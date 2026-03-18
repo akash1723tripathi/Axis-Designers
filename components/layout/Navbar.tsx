@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { useState, useRef, useEffect, useCallback } from "react";
+import { motion, AnimatePresence, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
 import { X, MapPin, Mail, Phone, Instagram, Facebook, Linkedin, Youtube, Twitter } from "lucide-react";
 import { useRouter, usePathname } from "next/navigation";
 
@@ -40,11 +40,31 @@ export const Navbar = () => {
       const router = useRouter();
       const pathname = usePathname();
       const isContactPage = pathname === "/contact";
-      const isHomePage = pathname === "/";
+
+      // Magnetic sticky effect for nav button
+      const btnX = useMotionValue(0);
+      const btnY = useMotionValue(0);
+      const springBtnX = useSpring(btnX, { stiffness: 250, damping: 20 });
+      const springBtnY = useSpring(btnY, { stiffness: 250, damping: 20 });
+
+      const handleBtnMouseMove = useCallback(
+            (e: React.MouseEvent) => {
+                  if (!buttonRef.current) return;
+                  const rect = buttonRef.current.getBoundingClientRect();
+                  const cx = rect.left + rect.width / 2;
+                  const cy = rect.top + rect.height / 2;
+                  btnX.set((e.clientX - cx) * 0.4);
+                  btnY.set((e.clientY - cy) * 0.4);
+            },
+            [btnX, btnY]
+      );
+
+      const handleBtnMouseLeave = useCallback(() => {
+            btnX.set(0);
+            btnY.set(0);
+      }, [btnX, btnY]);
 
       const { scrollY } = useScroll();
-      // Logo starts fading out at 50px of scroll, fully out at 400px (around transition point)
-      const logoOpacity = useTransform(scrollY, [0, 300], [1, 0]);
       const logoScale = useTransform(scrollY, [0, 300], [1, 0.9]);
       const logoShiftY = useTransform(scrollY, [0, 300], [0, -10]);
       const [logoVisible, setLogoVisible] = useState(true);
@@ -167,11 +187,14 @@ export const Navbar = () => {
 
                         <motion.button
                               ref={buttonRef}
-                              initial={{ opacity: 0, x: 30 }}
-                              animate={loaded ? { opacity: 1, x: 0 } : {}}
+                              style={{ x: springBtnX, y: springBtnY }}
+                              initial={{ opacity: 0 }}
+                              animate={loaded ? { opacity: 1 } : {}}
                               transition={{ duration: 1, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                              onMouseMove={handleBtnMouseMove}
+                              onMouseLeave={handleBtnMouseLeave}
                               onClick={handleToggle}
-                              className={`relative z-[60] ml-auto flex h-12 w-12 items-center justify-center rounded-full backdrop-blur-md transition-transform duration-300 hover:scale-110 pointer-events-auto ${isContactPage ? "border border-neutral-800/20 bg-neutral-800/5" : "border border-white/20 bg-white/5"}`}
+                              className={`relative z-[60] ml-auto flex h-12 w-12 items-center justify-center rounded-full backdrop-blur-md pointer-events-auto ${isContactPage ? "border border-neutral-800/20 bg-neutral-800/5" : "border border-white/20 bg-white/5"}`}
                               aria-label={isOpen ? "Close menu" : "Open menu"}
                         >
                               <AnimatePresence mode="wait">
@@ -228,28 +251,6 @@ export const Navbar = () => {
 
                                     {/* Content */}
                                     <div className="relative z-10 h-full flex flex-col">
-                                          {/* Spacer for top navbar */}
-                                          {/* <div className="h-28 flex items-center px-8 md:px-16">
-                                                <motion.img
-                                                      src="/navbar_logo.svg"
-                                                      alt="Axis Designers"
-                                                      className="h-20 w-auto object-contain cursor-pointer transition-all duration-300 filter brightness-110 contrast-110"
-                                                      onClick={() => {
-                                                            setIsOpen(false);
-                                                            router.push("/");
-                                                      }}
-                                                      animate={{
-                                                            y: [0, -6, 0],
-                                                      }}
-                                                      transition={{
-                                                            duration: 4,
-                                                            repeat: Infinity,
-                                                            ease: "easeInOut"
-                                                      }}
-                                                      whileHover={{ scale: 1.05 }}
-                                                />
-                                          </div> */}
-
                                           {/* Main content - split layout */}
                                           <div className="flex-1 flex flex-col-reverse md:flex-row items-stretch px-8 md:px-16 pb-8">
 
