@@ -4,13 +4,15 @@ import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Paperclip, X, CheckCircle, FileText, Image, File as FileIcon, Loader2 } from "lucide-react";
 
-const budgetOptions = ["10-20k", "30-40k", "40-50k", "50-100k", "> 100k"];
+const workTypeOptions = ["Interior Work", "Exhibitions"];
 
 export const Contact = () => {
       const [name, setName] = useState("");
+      const [company, setCompany] = useState("");
       const [email, setEmail] = useState("");
+      const [phone, setPhone] = useState("");
       const [message, setMessage] = useState("");
-      const [selectedBudget, setSelectedBudget] = useState<string | null>(null);
+      const [selectedWorkType, setSelectedWorkType] = useState<string | null>(null);
       const [showCaptcha, setShowCaptcha] = useState(false);
       const [captchaAnswer, setCaptchaAnswer] = useState("");
       const [captchaError, setCaptchaError] = useState(false);
@@ -66,9 +68,11 @@ export const Contact = () => {
             try {
                   const formData = new FormData();
                   formData.append("name", name);
+                  formData.append("company", company);
                   formData.append("email", email);
+                  formData.append("phone", phone);
                   formData.append("message", message);
-                  if (selectedBudget) formData.append("budget", selectedBudget);
+                  if (selectedWorkType) formData.append("workType", selectedWorkType);
                   attachedFiles.forEach((file) => formData.append("files", file));
 
                   const res = await fetch("/api/contact", {
@@ -86,9 +90,11 @@ export const Contact = () => {
                   setShowCaptcha(false);
                   setFormSubmitted(true);
                   setName("");
+                  setCompany("");
                   setEmail("");
+                  setPhone("");
                   setMessage("");
-                  setSelectedBudget(null);
+                  setSelectedWorkType(null);
                   setAttachedFiles([]);
                   setTimeout(() => setFormSubmitted(false), 5000);
             } catch {
@@ -96,7 +102,7 @@ export const Contact = () => {
             } finally {
                   setSending(false);
             }
-      }, [captchaAnswer, captchaChallenge.answer, name, email, message, selectedBudget, attachedFiles]);
+      }, [captchaAnswer, captchaChallenge.answer, name, company, email, phone, message, selectedWorkType, attachedFiles]);
 
       return (
             <section id="contact-form" className="relative">
@@ -120,7 +126,7 @@ export const Contact = () => {
                                           transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] as const }}
                                           className="text-5xl md:text-7xl lg:text-[6rem] font-heading uppercase leading-[0.95] text-neutral-900 tracking-tight"
                                     >
-                                          No Need
+                                          Write us to Elevate
                                     </motion.h2>
                               </div>
                               <div className="overflow-hidden">
@@ -131,7 +137,7 @@ export const Contact = () => {
                                           transition={{ duration: 1, delay: 0.1, ease: [0.76, 0, 0.24, 1] as const }}
                                           className="text-5xl md:text-7xl lg:text-[6rem] font-heading uppercase leading-[0.95] text-neutral-900 tracking-tight"
                                     >
-                                          To Be Shy.
+                                          Your <span className="text-orange-400">Business</span>
                                     </motion.h2>
                               </div>
 
@@ -161,7 +167,7 @@ export const Contact = () => {
                   {/* Contact Form Section */}
                   <div id="contact-form-fields" className="bg-[#f5f0eb]">
                         <div className="max-w-3xl mx-auto px-8 md:px-16 pb-32">
-                              {/* Name */}
+                              {/* Full Name */}
                               <motion.div
                                     initial={{ opacity: 0, y: 30 }}
                                     whileInView={{ opacity: 1, y: 0 }}
@@ -171,9 +177,26 @@ export const Contact = () => {
                               >
                                     <input
                                           type="text"
-                                          placeholder="Name"
+                                          placeholder="Full Name"
                                           value={name}
                                           onChange={(e) => setName(e.target.value)}
+                                          className="w-full bg-transparent border-b border-neutral-300 py-4 text-lg font-sans text-neutral-800 placeholder:text-neutral-800 focus:outline-none focus:border-orange-500 transition-colors duration-300"
+                                    />
+                              </motion.div>
+
+                              {/* Company Name */}
+                              <motion.div
+                                    initial={{ opacity: 0, y: 30 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: false, amount: 0.3 }}
+                                    transition={{ duration: 0.6, delay: 0.05, ease: [0.76, 0, 0.24, 1] as const }}
+                                    className="mb-12"
+                              >
+                                    <input
+                                          type="text"
+                                          placeholder="Company Name"
+                                          value={company}
+                                          onChange={(e) => setCompany(e.target.value)}
                                           className="w-full bg-transparent border-b border-neutral-300 py-4 text-lg font-sans text-neutral-800 placeholder:text-neutral-800 focus:outline-none focus:border-orange-500 transition-colors duration-300"
                                     />
                               </motion.div>
@@ -183,7 +206,7 @@ export const Contact = () => {
                                     initial={{ opacity: 0, y: 30 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: false, amount: 0.3 }}
-                                    transition={{ duration: 0.6, delay: 0.05, ease: [0.76, 0, 0.24, 1] as const }}
+                                    transition={{ duration: 0.6, delay: 0.1, ease: [0.76, 0, 0.24, 1] as const }}
                                     className="mb-12"
                               >
                                     <input
@@ -195,12 +218,56 @@ export const Contact = () => {
                                     />
                               </motion.div>
 
-                              {/* Project Description */}
+                              {/* Contact Number */}
                               <motion.div
                                     initial={{ opacity: 0, y: 30 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: false, amount: 0.3 }}
-                                    transition={{ duration: 0.6, delay: 0.1, ease: [0.76, 0, 0.24, 1] as const }}
+                                    transition={{ duration: 0.6, delay: 0.15, ease: [0.76, 0, 0.24, 1] as const }}
+                                    className="mb-12"
+                              >
+                                    <input
+                                          type="tel"
+                                          placeholder="Contact No"
+                                          value={phone}
+                                          onChange={(e) => setPhone(e.target.value)}
+                                          className="w-full bg-transparent border-b border-neutral-300 py-4 text-lg font-sans text-neutral-800 placeholder:text-neutral-800 focus:outline-none focus:border-orange-500 transition-colors duration-300"
+                                    />
+                              </motion.div>
+
+                              {/* Type of Work */}
+                              <motion.div
+                                    initial={{ opacity: 0, y: 30 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: false, amount: 0.3 }}
+                                    transition={{ duration: 0.6, delay: 0.2, ease: [0.76, 0, 0.24, 1] as const }}
+                                    className="mb-16"
+                              >
+                                    <p className="text-lg font-sans font-semibold text-neutral-800 mb-6">
+                                          Type of Work
+                                    </p>
+                                    <div className="flex flex-wrap gap-3">
+                                          {workTypeOptions.map((option) => (
+                                                <button
+                                                      key={option}
+                                                      onClick={() => setSelectedWorkType(option)}
+                                                      className={`px-5 py-2.5 rounded-full border text-sm font-sans transition-all duration-300 ${selectedWorkType === option
+                                                            ? "bg-orange-500 border-orange-500 text-white"
+                                                            : "border-neutral-400 text-neutral-700 hover:border-neutral-800"
+                                                            }`}
+                                                >
+                                                      {option}
+                                                </button>
+                                          ))}
+                                    </div>
+                              </motion.div>
+
+                              {/* Project Details */}
+                              <motion.div
+                                    initial={{ opacity: 0, y: 30 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: false, amount: 0.3 }}
+                                    transition={{ duration: 0.6, delay: 0.25, ease: [0.76, 0, 0.24, 1] as const }}
                                     className="mb-16"
                               >
                                     <textarea
@@ -212,39 +279,12 @@ export const Contact = () => {
                                     />
                               </motion.div>
 
-                              {/* Budget Selection */}
-                              <motion.div
-                                    initial={{ opacity: 0, y: 30 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: false, amount: 0.3 }}
-                                    transition={{ duration: 0.6, delay: 0.15, ease: [0.76, 0, 0.24, 1] as const }}
-                                    className="mb-16"
-                              >
-                                    <p className="text-lg font-sans font-semibold text-neutral-800 mb-6">
-                                          Project budget (USD)
-                                    </p>
-                                    <div className="flex flex-wrap gap-3">
-                                          {budgetOptions.map((option) => (
-                                                <button
-                                                      key={option}
-                                                      onClick={() => setSelectedBudget(option)}
-                                                      className={`px-5 py-2.5 rounded-full border text-sm font-sans transition-all duration-300 ${selectedBudget === option
-                                                            ? "bg-orange-500 border-orange-500 text-white"
-                                                            : "border-neutral-400 text-neutral-700 hover:border-neutral-800"
-                                                            }`}
-                                                >
-                                                      {option}
-                                                </button>
-                                          ))}
-                                    </div>
-                              </motion.div>
-
                               {/* Attachment */}
                               <motion.div
                                     initial={{ opacity: 0, y: 30 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: false, amount: 0.3 }}
-                                    transition={{ duration: 0.6, delay: 0.2, ease: [0.76, 0, 0.24, 1] as const }}
+                                    transition={{ duration: 0.6, delay: 0.3, ease: [0.76, 0, 0.24, 1] as const }}
                                     className="mb-16"
                               >
                                     <label className="inline-flex items-center gap-2 text-neutral-800 font-sans font-semibold cursor-pointer hover:text-orange-600 transition-colors group">
@@ -297,7 +337,7 @@ export const Contact = () => {
                                     initial={{ opacity: 0, y: 30 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: false, amount: 0.3 }}
-                                    transition={{ duration: 0.6, delay: 0.25, ease: [0.76, 0, 0.24, 1] as const }}
+                                    transition={{ duration: 0.6, delay: 0.35, ease: [0.76, 0, 0.24, 1] as const }}
                               >
                                     <button
                                           onClick={handleSendRequest}
