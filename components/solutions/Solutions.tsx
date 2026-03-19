@@ -5,7 +5,6 @@ import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import Image from "next/image";
 import { usePageTransition } from "@/components/layout/PageTransition";
 
-/* ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Data ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ */
 
 const services = [
       {
@@ -43,7 +42,6 @@ const services = [
       },
 ];
 
-/* ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Animations ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ */
 
 const fadeUp = {
       hidden: { opacity: 0, y: 30 },
@@ -57,8 +55,6 @@ const fadeUp = {
             },
       }),
 };
-
-/* ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Service Section ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ */
 
 interface ServiceSectionProps {
       service: (typeof services)[0];
@@ -90,7 +86,7 @@ const ServiceSection = ({ service, index, isLast }: ServiceSectionProps) => {
                               className={`flex flex-col ${isEven ? "lg:flex-row" : "lg:flex-row-reverse"
                                     } gap-12 lg:gap-20 py-24 md:py-32 lg:py-[50px] lg:min-h-screen items-center`}
                         >
-                              {/* ΓöÇΓöÇΓöÇ Text side (sticky on desktop) ΓöÇΓöÇΓöÇ */}
+                              {/*  Text side (sticky on desktop)  */}
                               <div className="w-full lg:w-[45%] lg:sticky lg:top-0 lg:self-center lg:py-32">
                                     <div ref={textRef}>
                                           <motion.div
@@ -138,7 +134,7 @@ const ServiceSection = ({ service, index, isLast }: ServiceSectionProps) => {
                                     </div>
                               </div>
 
-                              {/* ΓöÇΓöÇΓöÇ Image side (parallax) ΓöÇΓöÇΓöÇ */}
+                              {/*  Image side (parallax)  */}
                               <div className="w-full lg:w-[55%]">
                                     <motion.div
                                           className="relative aspect-[4/5] md:aspect-[3/4] lg:aspect-[4/5] rounded-2xl overflow-hidden bg-neutral-800"
@@ -173,14 +169,12 @@ const ServiceSection = ({ service, index, isLast }: ServiceSectionProps) => {
       );
 };
 
-/* ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Main Component ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ */
-
 export const Solutions = () => {
       const { navigateWithTransition } = usePageTransition();
 
       return (
             <div className="relative bg-neutral-950 overflow-hidden">
-                  {/* Ambient warm glows ΓÇö consistent with Team page */}
+                  {/* Ambient warm glows consistent with Team page */}
                   <div
                         className="fixed top-0 left-1/4 w-[700px] h-[700px] rounded-full blur-3xl pointer-events-none z-0"
                         style={{ background: "radial-gradient(circle, rgba(180,83,9,0.12) 0%, rgba(124,45,18,0.06) 50%, transparent 100%)" }}
@@ -194,7 +188,7 @@ export const Solutions = () => {
                         style={{ background: "radial-gradient(circle, rgba(217,119,6,0.10) 0%, rgba(124,45,18,0.05) 50%, transparent 100%)" }}
                   />
 
-                  {/* ΓöÇΓöÇΓöÇ Hero header ΓöÇΓöÇΓöÇ */}
+                  {/*  Hero header  */}
                   <section className="relative z-10 h-screen flex flex-col justify-center overflow-hidden">
                         {/* Hero-specific glow */}
                         <div
@@ -211,7 +205,7 @@ export const Solutions = () => {
                                           delay: 0.2,
                                           ease: [0.22, 1, 0.36, 1] as const,
                                     }}
-                                    className="text-sm font-sans uppercase tracking-[0.3em] text-orange-500 mb-4"
+                                    className="text-sm font-sans uppercase tracking-[0.3em] text-orange-500 mb-4 ml-2"
                               >
                                     What We Do
                               </motion.p>
@@ -258,7 +252,7 @@ export const Solutions = () => {
                         </motion.div>
                   </section>
 
-                  {/* ΓöÇΓöÇΓöÇ Service sections ΓöÇΓöÇΓöÇ */}
+                  {/*  Service sections  */}
                   <div className="relative z-10">
                         {services.map((service, idx) => (
                               <ServiceSection

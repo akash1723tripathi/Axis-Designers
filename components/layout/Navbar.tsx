@@ -39,7 +39,7 @@ export const Navbar = () => {
       const [origin, setOrigin] = useState({ x: "calc(100% - 3rem)", y: "2rem" });
       const router = useRouter();
       const pathname = usePathname();
-      const isContactPage = pathname === "/contact";
+      const isContactPage = pathname === "/contact" || pathname === "/career";
 
       // Magnetic sticky effect for nav button
       const btnX = useMotionValue(0);
@@ -363,9 +363,9 @@ export const Navbar = () => {
                                                       &copy; 2026 Axis Designers. All rights reserved.
                                                 </p>
                                                 <div className="flex gap-6 text-neutral-500 text-xs font-sans uppercase tracking-wider">
-                                                      <a href="#" className="hover:text-orange-400 transition-colors">Career</a>
-                                                      <a href="#" className="hover:text-orange-400 transition-colors">Privacy Policy</a>
-                                                      <a href="#" className="hover:text-orange-400 transition-colors">Terms of Service</a>
+                                                      <a href="/career" onClick={(e) => { e.preventDefault(); setIsOpen(false); router.push("/career"); }} className="hover:text-orange-400 transition-colors">Career</a>
+                                                      <a href="/privacy-policy" onClick={(e) => { e.preventDefault(); setIsOpen(false); router.push("/privacy-policy"); }} className="hover:text-orange-400 transition-colors">Privacy Policy</a>
+                                                      <a href="/terms-and-conditions" onClick={(e) => { e.preventDefault(); setIsOpen(false); router.push("/terms-and-conditions"); }} className="hover:text-orange-400 transition-colors">Terms of Service</a>
                                                 </div>
                                           </motion.div>
                                     </div>

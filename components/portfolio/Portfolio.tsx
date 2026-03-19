@@ -19,7 +19,7 @@ import {
 } from "lucide-react";
 import { usePageTransition } from "@/components/layout/PageTransition";
 
-/* ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Industry Data ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ */
+/*  Industry Data  */
 
 const industries: { title: string; icon: LucideIcon }[] = [
       { title: "Pharmaceutical & Healthcare", icon: Pill },
@@ -36,7 +36,7 @@ const industries: { title: string; icon: LucideIcon }[] = [
       { title: "Startups & Innovation", icon: Rocket },
 ];
 
-/* ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Animation Variants ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ */
+/*  Animation Variants  */
 
 const stagger: Variants = {
       hidden: {},
@@ -55,7 +55,7 @@ const cardVariant: Variants = {
       },
 };
 
-/* ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Industry Card ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ */
+/*  Industry Card  */
 
 interface IndustryCardProps {
       title: string;
@@ -95,7 +95,7 @@ const IndustryCard = ({ title, Icon }: IndustryCardProps) => {
       );
 };
 
-/* ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Main Component ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ */
+/*  Main Component  */
 
 export const Portfolio = () => {
       const { navigateWithTransition } = usePageTransition();
@@ -118,7 +118,7 @@ export const Portfolio = () => {
                         style={{ background: "radial-gradient(circle, rgba(217,119,6,0.10) 0%, rgba(124,45,18,0.05) 50%, transparent 100%)" }}
                   />
 
-                  {/* ΓöÇΓöÇΓöÇ Hero header ΓöÇΓöÇΓöÇ */}
+                  {/*  Hero header */}
                   <section className="relative z-10 h-screen flex flex-col justify-center overflow-hidden">
                         {/* Hero-specific glow */}
                         <div
@@ -165,7 +165,7 @@ export const Portfolio = () => {
                                     }}
                                     className="text-neutral-400 font-sans text-sm md:text-base max-w-lg mt-6 leading-relaxed"
                               >
-                                    We&apos;ve delivered award-winning exhibition spaces across diverse industries ΓÇö each one crafted to tell a unique brand story.
+                                    We&apos;ve delivered award-winning exhibition spaces across diverse industries each one crafted to tell a unique brand story.
                               </motion.p>
 
                               <motion.div
@@ -195,7 +195,7 @@ export const Portfolio = () => {
                         </motion.div>
                   </section>
 
-                  {/* ΓöÇΓöÇΓöÇ Industries We Serve ΓöÇΓöÇΓöÇ */}
+                  {/*  Industries We Serve  */}
                   <section className="relative z-10 py-24 md:py-32">
                         <div className="max-w-7xl mx-auto px-6 md:px-16">
                               {/* Section header */}
@@ -248,64 +248,6 @@ export const Portfolio = () => {
                               </div>
                         </div>
                   </section>
-
-                  {/* ΓöÇΓöÇΓöÇ Bottom CTA ΓöÇΓöÇΓöÇ */}
-                  {/* <section className="relative z-10 py-24 md:py-40">
-                        <div className="max-w-7xl mx-auto px-6 md:px-16 text-center">
-                              <motion.h2
-                                    initial={{ opacity: 0, y: 30 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: false, amount: 0.3 }}
-                                    transition={{
-                                          duration: 0.7,
-                                          ease: [0.22, 1, 0.36, 1] as const,
-                                    }}
-                                    className="text-3xl md:text-5xl font-heading font-bold uppercase text-white mb-6"
-                              >
-                                    Have a Project in{" "}
-                                    <span className="text-orange-500">Mind</span>?
-                              </motion.h2>
-
-                              <motion.p
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: false, amount: 0.3 }}
-                                    transition={{
-                                          duration: 0.6,
-                                          delay: 0.15,
-                                          ease: [0.22, 1, 0.36, 1] as const,
-                                    }}
-                                    className="text-neutral-400 font-sans text-sm md:text-base max-w-xl mx-auto mb-10 leading-relaxed"
-                              >
-                                    Whatever your industry, we bring the same passion and precision
-                                    to every exhibition space we create.
-                              </motion.p>
-
-                              <motion.div
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: false, amount: 0.3 }}
-                                    transition={{
-                                          duration: 0.6,
-                                          delay: 0.3,
-                                          ease: [0.22, 1, 0.36, 1] as const,
-                                    }}
-                              >
-                                    <button
-                                          onClick={(e) => navigateWithTransition("/contact", { x: e.clientX, y: e.clientY })}
-                                          className="group relative inline-flex items-center gap-3 px-10 py-5 rounded-full border border-neutral-600 text-white font-sans text-sm uppercase tracking-[0.2em] overflow-hidden transition-all duration-500 hover:border-orange-500 cursor-pointer"
-                                    >
-                                          <span className="absolute inset-0 bg-orange-500 rounded-full scale-0 group-hover:scale-100 transition-transform duration-500 ease-out origin-center" />
-                                          <span className="relative z-10 flex items-center gap-3">
-                                                Get in Touch
-                                                <svg className="w-4 h-4 -translate-x-2 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                                      <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                                </svg>
-                                          </span>
-                                    </button>
-                              </motion.div>
-                        </div>
-                  </section> */}
             </div>
       );
 };
