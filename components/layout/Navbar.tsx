@@ -9,7 +9,7 @@ const navLinks = [
       { title: "Home", href: "/" },
       { title: "Solutions", href: "/solutions" },
       { title: "Portfolio", href: "/portfolio" },
-      { title: "About", href: "/team" },
+      { title: "About", href: "/about" },
       { title: "Contact", href: "/contact" },
 ];
 
@@ -40,6 +40,7 @@ export const Navbar = () => {
       const router = useRouter();
       const pathname = usePathname();
       const isContactPage = pathname === "/contact" || pathname === "/career";
+      const isGalleryPage = pathname === "/gallery";
 
       // Magnetic sticky effect for nav button
       const btnX = useMotionValue(0);
@@ -151,7 +152,7 @@ export const Navbar = () => {
                                     y: logoShiftY,
                                     pointerEvents: logoVisible && !isOpen ? 'auto' : 'none'
                               }}
-                              animate={{ opacity: isOpen || logoHidden ? 0 : logoVisible ? 1 : 0 }}
+                              animate={{ opacity: isOpen || logoHidden || isGalleryPage ? 0 : logoVisible ? 1 : 0 }}
                               transition={{ duration: 0.3 }}
                               className="relative pointer-events-auto"
                         >
@@ -164,7 +165,7 @@ export const Navbar = () => {
                                     onClick={() => router.push("/")}
                               >
                                     <motion.img
-                                          src={isContactPage ? "/logos/axis_b&w.png" : "/logos/axis_logo_color.png"}
+                                          src={isContactPage ? "/logos/axis_b&w.png" : "/logos/axis_logo_white.png"}
                                           alt="Axis Designers"
                                           className="h-40 pt-4 w-auto object-contain transition-all duration-500 group-hover:drop-shadow-[0_0_20px_rgba(255,165,0,0.6)]"
                                           animate={{

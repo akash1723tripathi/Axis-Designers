@@ -33,7 +33,7 @@ export const Services = () => {
       return (
             <section id="services" className="pt-32 md:pt-40 pb-24 bg-neutral-950 text-white">
                   <div className="max-w-7xl mx-auto px-8 md:px-16">
-                        <div className="mb-20">
+                        <div className="mb-12">
                               <div className="flex items-center gap-4 mb-6">
                                     <button
                                           onClick={(e) => navigateWithTransition("/solutions", { x: e.clientX, y: e.clientY })}
@@ -56,7 +56,7 @@ export const Services = () => {
                                           viewport={{ once: false, amount: 0.3 }}
                                           className="group border-b border-neutral-800 pb-12 cursor-pointer"
                                     >
-                                          <div className="flex flex-col md:flex-row md:items-baseline justify-between gap-6">
+                                          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                                                 <span className="text-sm font-mono text-neutral-500">/{service.id}</span>
                                                 <h3 className="text-4xl md:text-6xl font-heading uppercase group-hover:text-neutral-400 transition-colors w-full md:w-1/2">
                                                       {service.title}

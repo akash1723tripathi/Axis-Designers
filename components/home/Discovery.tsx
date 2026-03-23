@@ -27,6 +27,20 @@ export const Discovery = () => {
                         ref={sectionRef}
                         className="relative bg-neutral-950 overflow-hidden py-20 md:py-32"
                   >
+                        {/* Ambient warm glows */}
+                        <div
+                              className="absolute top-0 left-1/4 w-[700px] h-[700px] rounded-full blur-3xl pointer-events-none"
+                              style={{ background: "radial-gradient(circle, rgba(180,83,9,0.12) 0%, rgba(124,45,18,0.06) 50%, transparent 100%)" }}
+                        />
+                        <div
+                              className="absolute top-1/3 right-1/5 w-[500px] h-[500px] rounded-full blur-3xl pointer-events-none"
+                              style={{ background: "radial-gradient(circle, rgba(234,88,12,0.08) 0%, rgba(120,53,15,0.04) 50%, transparent 100%)" }}
+                        />
+                        <div
+                              className="absolute bottom-1/4 left-1/2 w-[600px] h-[600px] rounded-full blur-3xl pointer-events-none"
+                              style={{ background: "radial-gradient(circle, rgba(217,119,6,0.10) 0%, rgba(124,45,18,0.05) 50%, transparent 100%)" }}
+                        />
+
                         {/* Scrolling text marquee */}
                         <div className="space-y-4 mb-20 md:mb-32 select-none">
                               {/* Row 1 - scrolls left */}
@@ -69,7 +83,7 @@ export const Discovery = () => {
                         </div>
 
                         {/* Video preview */}
-                        <div className="max-w-7xl mx-auto px-8 md:px-16">
+                        <div className="max-w-8xl mx-auto px-8 md:px-16">
                               <motion.div
                                     initial={{ opacity: 0, y: 60 }}
                                     whileInView={{ opacity: 1, y: 0 }}
@@ -88,7 +102,7 @@ export const Discovery = () => {
                                           preload="auto"
                                           className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                                     >
-                                          <source src="/axis_final_video.mp4" type="video/mp4" />
+                                          <source src="/Axis Designers at Bharat Nutraverse Expo 2025.mp4" type="video/mp4" />
                                     </video>
 
                                     {/* Dark overlay */}
@@ -146,7 +160,7 @@ export const Discovery = () => {
                                                 playsInline
                                                 className="w-full h-full rounded-xl"
                                           >
-                                                <source src="/axis_final_video.mp4" type="video/mp4" />
+                                                <source src="/Axis Designers at Bharat Nutraverse Expo 2025.mp4" type="video/mp4" />
                                           </video>
                                     </motion.div>
                               </motion.div>

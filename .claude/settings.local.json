@@ -3,7 +3,10 @@
     "allow": [
       "WebFetch(domain:monopo.vn)",
       "WebFetch(domain:cuberto.com)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Bash(npm install:*)",
+      "Bash(npx sanity@latest typegen generate 2>&1)",
+      "Bash(npx sanity@latest schema extract 2>&1)"
     ]
   }
 }

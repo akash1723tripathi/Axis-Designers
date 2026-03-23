@@ -121,8 +121,8 @@ export const FeaturedProjects = () => {
                                                 <ProjectCard key={project.id} project={project} index={i * 2} />
                                           ))}
                                     </div>
-                                    {/* Right column - offset down for masonry effect */}
-                                    <div className="flex-1 flex flex-col gap-16 md:mt-32">
+                                    {/* Right column */}
+                                    <div className="flex-1 flex flex-col gap-16">
                                           {rightColumn.map((project, i) => (
                                                 <ProjectCard key={project.id} project={project} index={i * 2 + 1} />
                                           ))}

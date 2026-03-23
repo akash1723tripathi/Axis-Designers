@@ -1,10 +1,11 @@
-import { Portfolio } from "@/components/portfolio";
+import { Portfolio, VideoCarousel } from "@/components/portfolio";
 import { Footer } from "@/components/shared";
 
 export default function PortfolioPage() {
       return (
             <main className="relative min-h-screen">
                   <Portfolio />
+                  <VideoCarousel />
                   <Footer />
             </main>
       );

@@ -7,7 +7,21 @@ export const About = () => {
       const { navigateWithTransition } = usePageTransition();
 
       return (
-            <section id="about" className="relative py-32 min-h-[80vh] flex items-center justify-center bg-neutral-950">
+            <section id="about" className="relative py-32 min-h-[80vh] flex items-center justify-center bg-neutral-950 overflow-hidden">
+                  {/* Ambient warm glows */}
+                  <div
+                        className="absolute top-0 left-1/4 w-[700px] h-[700px] rounded-full blur-3xl pointer-events-none"
+                        style={{ background: "radial-gradient(circle, rgba(180,83,9,0.12) 0%, rgba(124,45,18,0.06) 50%, transparent 100%)" }}
+                  />
+                  <div
+                        className="absolute top-1/3 right-1/5 w-[500px] h-[500px] rounded-full blur-3xl pointer-events-none"
+                        style={{ background: "radial-gradient(circle, rgba(234,88,12,0.08) 0%, rgba(120,53,15,0.04) 50%, transparent 100%)" }}
+                  />
+                  <div
+                        className="absolute bottom-1/4 left-1/2 w-[600px] h-[600px] rounded-full blur-3xl pointer-events-none"
+                        style={{ background: "radial-gradient(circle, rgba(217,119,6,0.10) 0%, rgba(124,45,18,0.05) 50%, transparent 100%)" }}
+                  />
+
                   {/* Content */}
                   <div className="relative z-10 max-w-4xl px-4 text-center">
                         <motion.h2
@@ -35,7 +49,7 @@ export const About = () => {
                               whileInView={{ opacity: 1, y: 0 }}
                               transition={{ duration: 0.8, delay: 0.4 }}
                               viewport={{ once: false, amount: 0.3 }}
-                              onClick={(e) => navigateWithTransition("/team", { x: e.clientX, y: e.clientY })}
+                              onClick={(e) => navigateWithTransition("/about", { x: e.clientX, y: e.clientY })}
                               className="group relative inline-flex items-center gap-3 mt-12 px-10 py-5 rounded-full border border-neutral-600 text-white font-sans text-sm uppercase tracking-[0.2em] overflow-hidden transition-colors duration-500 hover:border-orange-500 hover:text-white cursor-pointer"
                         >
                               <span className="absolute inset-0 bg-orange-500 rounded-full scale-0 group-hover:scale-100 transition-transform duration-500 ease-out origin-center" />

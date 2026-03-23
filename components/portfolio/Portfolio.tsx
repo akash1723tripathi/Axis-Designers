@@ -60,18 +60,21 @@ const cardVariant: Variants = {
 interface IndustryCardProps {
       title: string;
       Icon: LucideIcon;
+      onClick?: (e: React.MouseEvent) => void;
 }
 
-const IndustryCard = ({ title, Icon }: IndustryCardProps) => {
+const IndustryCard = ({ title, Icon, onClick }: IndustryCardProps) => {
       return (
             <motion.div
                   variants={cardVariant}
                   whileHover={{ y: -8, scale: 1.04 }}
                   transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  onClick={onClick}
                   className="group relative flex flex-col items-center justify-center gap-4 p-5 md:p-7 rounded-2xl cursor-pointer
                         bg-white/[0.03] backdrop-blur-sm border border-white/[0.06]
                         hover:border-orange-500/40 hover:bg-white/[0.06]
                         transition-colors duration-500"
+                  data-cursor-hover
             >
                   {/* Hover glow */}
                   <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-b from-orange-500/[0.08] to-transparent" />
@@ -242,6 +245,11 @@ export const Portfolio = () => {
                                                       key={industry.title}
                                                       title={industry.title}
                                                       Icon={industry.icon}
+                                                      onClick={(e) => {
+                                                            const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+                                                            const origin = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+                                                            navigateWithTransition(`/gallery?industry=${encodeURIComponent(industry.title)}`, origin);
+                                                      }}
                                                 />
                                           ))}
                                     </motion.div>

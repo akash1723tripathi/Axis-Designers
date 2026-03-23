@@ -1,0 +1,8 @@
+/* Hide site navbar, custom cursor, and transition overlay on the Sanity Studio page */
+
+/* Force studio to fill the viewport above everything else */
+#sanity-studio {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+}

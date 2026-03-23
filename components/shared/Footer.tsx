@@ -154,7 +154,8 @@ export const Footer = () => {
                                           </div>
                                           <a href="https://www.google.com/maps/search/?api=1&query=Axis+Designers+GmbH+Medienhaus+M%C3%B6rikestrasse+67+170199+Stuttgart+Germany" target="_blank" rel="noopener noreferrer" className="text-neutral-300 leading-relaxed block hover:text-orange-500 transition-colors duration-300">
                                                 Axis Designers <br />
-                                                GmbH, Medienhaus, M&ouml;rikestrasse 67, 170199 Stuttgart, Germany
+                                                CL Campello No 4, 03509 Finestra
+                                                <br/> Alicate, Spain 
                                           </a>
                                     </div>
                                     <div className="space-y-1">
